@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
-import { getDatabase, push, ref, onValue, remove } from "firebase/database";
 import firebase from "./firebase";
+import { getDatabase, push, ref, onValue, remove } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-const Payee = () => {
+const Payee = ({ userInput, setUserInput }) => {
   // set state for inputs
   // useState payeeName
   const [payeeName, setPayeeName] = useState([]);
-  const [userInput, setUserInput] = useState([]);
 
   useEffect(() => {
     const database = getDatabase(firebase);

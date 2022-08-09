@@ -1,15 +1,17 @@
 import Payee from "./Payee";
 import MenuItem from "./MenuItem";
 // import Fees from "./Fees";
-// import { useState } from "react";
+import { useState } from "react";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const MainContainer = () => {
+  const [userInput, setUserInput] = useState([]);
+
   return (
     <main id="mainContent">
-      <Payee />
-      <MenuItem />
+      <Payee userInput={userInput} setUserInput={setUserInput} />
+      <MenuItem userInput={userInput} setUserInput={setUserInput} />
       <section className="extraFees">
         <div className="wrapper">
           <h2>Fees</h2>

@@ -1,8 +1,17 @@
 import { useState } from "react";
+import firebase from "./firebase";
+import {
+  getDatabase,
+  push,
+  ref,
+  onValue,
+  remove,
+  set,
+} from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-const MenuItem = () => {
+const MenuItem = ({ userInput, setUserInput }) => {
   // useState itemName
   const [itemName, setItemName] = useState([]);
 
@@ -33,12 +42,22 @@ const MenuItem = () => {
   };
 
   // store input value
-  const storeItemName = (e) => {
+  const storeItemName = (e, payeeId) => {
     e.preventDefault();
 
     if (itemPrice && itemName) {
       const addItemPopup = document.querySelector(".addItemPopup");
+      const database = getDatabase(firebase);
+      const dbRef = ref(database, `/${payeeId}`);
       addItemPopup.classList.toggle("active");
+
+      console.log(payeeId);
+
+      set(dbRef, {
+        name: userInput.name,
+        item: itemName,
+        price: itemPrice,
+      });
       setItemName("");
       setItemPrice("");
     } else {
@@ -46,36 +65,59 @@ const MenuItem = () => {
     }
   };
 
+  //   const submitItemName = (payeeId) => {
+  //     // e.preventDefault();
+
+  //     set(dbRef(), {
+  //       name: userInput.name,
+  //       item: itemName,
+  //       price: itemPrice,
+  //     });
+  //   };
+
   return (
     <section className="addItem">
       <div className="addItemPopup popup">
         <form action="">
-          <label htmlFor="itemName">Item Name</label>
-          <input
-            type="text"
-            name="itemName"
-            onChange={handleItemChange}
-            value={itemName}
-            required
-          />
-          <label htmlFor="itemPrice">Item Price</label>
-          <input
-            type="text"
-            name="itemPrice"
-            onChange={handlePriceChange}
-            value={itemPrice}
-            required
-          />
+          <fieldset>
+            <label htmlFor="itemName">Item Name</label>
+            <input
+              type="text"
+              name="itemName"
+              onChange={handleItemChange}
+              value={itemName}
+              required
+            />
+            <label htmlFor="itemPrice">Item Price</label>
+            <input
+              type="number"
+              name="itemPrice"
+              onChange={handlePriceChange}
+              value={itemPrice}
+              required
+            />
+          </fieldset>
+          <fieldset>
+            <label htmlFor="selectPayee">Payee Name</label>
+            <select name="selectPayee" id="selectPayee">
+              {userInput.map((username) => {
+                return <option value={username.name}>{username.name}</option>;
+              })}
+            </select>
+          </fieldset>
           <button onClick={storeItemName}>Submit</button>
           <button onClick={closeItemButton}>Cancel</button>
         </form>
       </div>
       <div className="wrapper">
         <h2>Add Item</h2>
-        <button className="addItemButton addButton" onClick={addItemHandle}>
-          <FontAwesomeIcon icon={faPlus} className="addIcon" />
-        </button>
+
         <ul className="orderList">
+          <li>
+            <button className="addItemButton addButton" onClick={addItemHandle}>
+              <FontAwesomeIcon icon={faPlus} className="addIcon" />
+            </button>
+          </li>
           {
             // RENDER ORDER LIST
           }
