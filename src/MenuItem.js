@@ -65,16 +65,6 @@ const MenuItem = ({ userInput, setUserInput }) => {
     }
   };
 
-  //   const submitItemName = (payeeId) => {
-  //     // e.preventDefault();
-
-  //     set(dbRef(), {
-  //       name: userInput.name,
-  //       item: itemName,
-  //       price: itemPrice,
-  //     });
-  //   };
-
   return (
     <section className="addItem">
       <div className="addItemPopup popup">
