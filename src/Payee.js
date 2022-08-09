@@ -6,7 +6,6 @@ import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Payee = ({ userInput, setUserInput }) => {
   // set state for inputs
-  // useState payeeName
   const [payeeName, setPayeeName] = useState([]);
 
   useEffect(() => {
@@ -18,7 +17,11 @@ const Payee = ({ userInput, setUserInput }) => {
       const newState = [];
 
       for (let key in data) {
-        newState.push({ key: key, name: data[key] });
+        const newUser = {
+          name: data[key],
+          test: "test",
+        };
+        newState.push({ key: key, newUser });
       }
 
       setUserInput(newState);
@@ -51,7 +54,6 @@ const Payee = ({ userInput, setUserInput }) => {
     const dbRef = ref(database);
 
     if (payeeName) {
-      push(dbRef, payeeName);
       const addPayeePopup = document.querySelector(".addPayeePopup");
       addPayeePopup.classList.toggle("active");
       setPayeeName("");
@@ -74,7 +76,7 @@ const Payee = ({ userInput, setUserInput }) => {
           <input
             type="text"
             name="payeeName"
-            placeholder="ex:Shannon"
+            placeholder="ex: Shannon"
             onChange={handlePayeeChange}
             value={payeeName}
           />
@@ -96,9 +98,10 @@ const Payee = ({ userInput, setUserInput }) => {
           </li>
           {
             userInput.map((name) => {
+              console.log(name);
               return (
-                <li key={name.key} className="payeeBox">
-                  <p>{name.name}</p>
+                <li className={`payeeBox`}>
+                  <p>name</p>
                   <button
                     onClick={() => {
                       deletePayee(name.key);
@@ -118,3 +121,6 @@ const Payee = ({ userInput, setUserInput }) => {
 };
 
 export default Payee;
+
+// ask user for payee name
+// update payee name variable using setPayeeName

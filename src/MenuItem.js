@@ -1,13 +1,6 @@
 import { useState } from "react";
 import firebase from "./firebase";
-import {
-  getDatabase,
-  push,
-  ref,
-  onValue,
-  remove,
-  set,
-} from "firebase/database";
+import { getDatabase, update, ref } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
@@ -17,6 +10,8 @@ const MenuItem = ({ userInput, setUserInput }) => {
 
   // useState itemPrice
   const [itemPrice, setItemPrice] = useState([]);
+
+  const [itemKey, setItemKey] = useState([]);
 
   const addItemHandle = () => {
     const addItemPopup = document.querySelector(".addItemPopup");
@@ -41,23 +36,22 @@ const MenuItem = ({ userInput, setUserInput }) => {
     setItemPrice(e.target.value);
   };
 
+  // read options value
+  const readOptions = (e) => {
+    e.preventDefault();
+    setItemKey(e.target.value);
+  };
   // store input value
-  const storeItemName = (e, payeeId) => {
+  const storeItemName = (e) => {
     e.preventDefault();
 
     if (itemPrice && itemName) {
       const addItemPopup = document.querySelector(".addItemPopup");
       const database = getDatabase(firebase);
-      const dbRef = ref(database, `/${payeeId}`);
+      const dbRef = ref(database, `/${itemKey}`);
       addItemPopup.classList.toggle("active");
 
-      console.log(payeeId);
-
-      set(dbRef, {
-        name: userInput.name,
-        item: itemName,
-        price: itemPrice,
-      });
+      // update(dbRef, { order: [{ itemName: itemName, itemPrice: itemPrice }] });
       setItemName("");
       setItemPrice("");
     } else {
@@ -89,10 +83,20 @@ const MenuItem = ({ userInput, setUserInput }) => {
           </fieldset>
           <fieldset>
             <label htmlFor="selectPayee">Payee Name</label>
-            <select name="selectPayee" id="selectPayee">
-              {userInput.map((username) => {
-                return <option value={username.name}>{username.name}</option>;
-              })}
+            <select
+              name="selectPayee"
+              defaultValue="Select Payee"
+              id="selectPayee"
+              className="selectPayee"
+              onChange={(e) => readOptions(e)}
+            >
+              {/* {userInput.map((username) => {
+                return (
+                  <option value={username.userInfo.key}>
+                    {username.userInfo.name}
+                  </option>
+                );
+              })} */}
             </select>
           </fieldset>
           <button onClick={storeItemName}>Submit</button>
