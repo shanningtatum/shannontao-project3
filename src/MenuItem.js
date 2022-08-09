@@ -101,7 +101,6 @@ const MenuItem = ({ userInput, setUserInput }) => {
       </div>
       <div className="wrapper">
         <h2>Add Item</h2>
-
         <ul className="orderList">
           <li>
             <button className="addItemButton addButton" onClick={addItemHandle}>
