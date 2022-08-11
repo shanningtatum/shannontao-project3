@@ -90,13 +90,11 @@ const MenuItem = ({ userInput, setUserInput }) => {
               className="selectPayee"
               onChange={(e) => readOptions(e)}
             >
-              {/* {userInput.map((username) => {
+              {userInput.map((username) => {
                 return (
-                  <option value={username.userInfo.key}>
-                    {username.userInfo.name}
-                  </option>
+                  <option value={username.key}>{username.userInfo.name}</option>
                 );
-              })} */}
+              })}
             </select>
           </fieldset>
           <button onClick={storeItemName}>Submit</button>
@@ -121,3 +119,17 @@ const MenuItem = ({ userInput, setUserInput }) => {
 };
 
 export default MenuItem;
+
+// {
+//   name:'shannon',
+//   orders:{
+//     orderItem:'chicken'
+//     price: 12.99
+//   },
+//   {
+//     orderItem:'tacos'
+//     price: 12.99
+//   }
+
+//   ]
+// }

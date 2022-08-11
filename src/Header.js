@@ -1,7 +1,9 @@
 const Header = () => {
   return (
     <header>
-      <h1>UberEats Bill Splitter</h1>
+      <h1>
+        Duber<span className="strongFont">Eats</span> Bill Splitter
+      </h1>
     </header>
   );
 };

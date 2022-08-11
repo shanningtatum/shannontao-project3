@@ -8,6 +8,8 @@ const Payee = ({ userInput, setUserInput }) => {
   // set state for inputs
   const [payeeName, setPayeeName] = useState([]);
 
+  // look into make database and dbref global variables
+
   useEffect(() => {
     const database = getDatabase(firebase);
     const dbRef = ref(database);
@@ -18,15 +20,14 @@ const Payee = ({ userInput, setUserInput }) => {
 
       for (let key in data) {
         const newUser = {
-          name: data[key],
-          test: "test",
+          name: payeeName,
         };
         newState.push({ key: key, newUser });
       }
 
       setUserInput(newState);
     });
-  }, []);
+  }, [payeeName]);
 
   // add popups
   const addPayeeHandle = () => {
@@ -54,6 +55,7 @@ const Payee = ({ userInput, setUserInput }) => {
     const dbRef = ref(database);
 
     if (payeeName) {
+      push(dbRef, userInput);
       const addPayeePopup = document.querySelector(".addPayeePopup");
       addPayeePopup.classList.toggle("active");
       setPayeeName("");
@@ -97,11 +99,12 @@ const Payee = ({ userInput, setUserInput }) => {
             </button>
           </li>
           {
+            // create another variable that is userinput.name and map that instead
             userInput.map((name) => {
               console.log(name);
               return (
                 <li className={`payeeBox`}>
-                  <p>name</p>
+                  <p>{name.name}</p>
                   <button
                     onClick={() => {
                       deletePayee(name.key);
