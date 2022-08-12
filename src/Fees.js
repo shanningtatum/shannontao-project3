@@ -1,14 +1,17 @@
 import { useState } from "react";
 
-const Fees = () => {
+const Fees = ({ userInput, subtotalInput, setSubtotal }) => {
   // set up states for the different inputs
   const [serviceFeeInput, setServiceFee] = useState("");
   const [deliveryFeeInput, setDeliveryFee] = useState("");
+  // empty array to store order values
+  const orderValues = [];
+  let orderSubtotal = 0;
 
   // get the handle change for subtotal
-  // const handleSubtotal = (e) => {
-  //   setSubtotal(e.target.value);
-  // };
+  const handleSubtotal = (e) => {
+    setSubtotal(e.target.value);
+  };
 
   // get the handle change for service fee
   const handleServiceFee = (e) => {
@@ -23,7 +26,7 @@ const Fees = () => {
   const calculateBill = (e, subtotal, serviceFee, deliveryFee) => {
     e.preventDefault();
     console.log(subtotal, serviceFee, deliveryFee);
-    // setSubtotal("");
+    setSubtotal("");
     setServiceFee("");
     setDeliveryFee("");
   };
@@ -34,13 +37,27 @@ const Fees = () => {
         <h2>Fees</h2>
         <form action="">
           <div className="subtotalDiv">
-            <label htmlFor="subtotalInput">Subtotal: </label>
-            {/* <input
-              type="number"
-              name="subtotalInput"
-              onChange={handleSubtotal}
-              value={subtotalInput}
-            /> */}
+            <p>Subtotal:&nbsp;</p>
+            {userInput.map((orderTotal) => {
+              // checks if this variable exists, if it does, run the following code
+              if (orderTotal.userInfo.name.order) {
+                const priceOfItem = orderTotal.userInfo.name.order.itemPrice;
+                // console.log(parseFloat(priceOfItem));
+
+                orderValues.push(parseFloat(priceOfItem));
+
+                const initialValue = 0;
+                const sumOfOrders = orderValues.reduce(
+                  (previousValue, currentValue) => previousValue + currentValue,
+                  initialValue
+                );
+
+                orderSubtotal = sumOfOrders.toFixed(2);
+              }
+
+              // if it doesn't exist, don't do anything
+            })}
+            <p>$ {orderSubtotal}</p>
           </div>
           <div className="serviceFeeDiv">
             <label htmlFor="serviceFeeInput">Service Fee</label>
@@ -66,7 +83,9 @@ const Fees = () => {
           </div>
         </form>
         <button
-          onClick={(e) => calculateBill(e, serviceFeeInput, deliveryFeeInput)}
+          onClick={(e) =>
+            calculateBill(e, subtotalInput, serviceFeeInput, deliveryFeeInput)
+          }
         >
           Calculate
         </button>

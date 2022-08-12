@@ -105,10 +105,12 @@ const Payee = ({ userInput, setUserInput }) => {
             name="payeeName"
             placeholder="ex: Shannon"
             onChange={handlePayeeChange}
-            // value={payeeName}
+            defaultValue=""
           />
-          <button onClick={storePayeeName}>Submit</button>
-          <button onClick={closePayeeButton}>Cancel</button>
+          <div className="actionButton">
+            <button onClick={closePayeeButton}>Cancel</button>
+            <button onClick={storePayeeName}>Submit</button>
+          </div>
         </form>
       </div>
       <div className="wrapper">

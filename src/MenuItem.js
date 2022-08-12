@@ -4,7 +4,7 @@ import { getDatabase, update, ref, push, set, remove } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-const MenuItem = ({ userInput, setUserInput }) => {
+const MenuItem = ({ userInput, setUserInput, subtotal, setSubtotal }) => {
   const database = getDatabase(firebase);
 
   // useState itemName
@@ -53,12 +53,14 @@ const MenuItem = ({ userInput, setUserInput }) => {
     if (itemPrice && itemName) {
       const addItemPopup = document.querySelector(".addItemPopup");
       const database = getDatabase(firebase);
-      const dbRef = ref(database, `/${itemKey}/order`);
+      const dbRef = ref(database, `/${itemKey}`);
       addItemPopup.classList.toggle("active");
 
       const userOrder = {
-        itemName: itemName,
-        itemPrice: itemPrice,
+        order: {
+          itemName: itemName,
+          itemPrice: itemPrice,
+        },
       };
       console.log(userInput);
       return update(dbRef, userOrder);
@@ -69,9 +71,7 @@ const MenuItem = ({ userInput, setUserInput }) => {
 
   // remove item on click handle
   const removeItem = (orderKey) => {
-    console.log(orderKey);
     const deleteRef = ref(database, `/${orderKey}/order`);
-    console.log(deleteRef);
     remove(deleteRef);
   };
 
@@ -86,6 +86,7 @@ const MenuItem = ({ userInput, setUserInput }) => {
               name="itemName"
               onChange={handleItemChange}
               value={itemName}
+              placeholder="Ex: Chicken Tenders"
               required
             />
             <label htmlFor="itemPrice">Item Price</label>
@@ -94,6 +95,7 @@ const MenuItem = ({ userInput, setUserInput }) => {
               name="itemPrice"
               onChange={handlePriceChange}
               value={itemPrice}
+              placeholder="Ex: 4.99"
               required
             />
           </fieldset>
@@ -119,8 +121,10 @@ const MenuItem = ({ userInput, setUserInput }) => {
               })}
             </select>
           </fieldset>
-          <button onClick={storeItemName}>Submit</button>
-          <button onClick={closeItemButton}>Cancel</button>
+          <div className="actionButton">
+            <button onClick={closeItemButton}>Cancel</button>
+            <button onClick={storeItemName}>Submit</button>
+          </div>
         </form>
       </div>
       <div className="wrapper">
@@ -132,13 +136,14 @@ const MenuItem = ({ userInput, setUserInput }) => {
             </button>
           </li>
           {userInput.map((userOrder) => {
-            console.log(userOrder);
+            // console.log(userOrder);
             if (userOrder.userInfo.name.order == undefined) {
               // alert("missing order");
             } else {
               return (
                 <li className="payeeBox">
                   <p>{userOrder.userInfo.name.order.itemName}</p>
+                  <p>{userOrder.userInfo.name.order.itemPrice}</p>
                   <button onClick={() => removeItem(userOrder.userInfo.key)}>
                     <FontAwesomeIcon icon={faXmark} />
                   </button>

@@ -19,7 +19,15 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
 * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; border: 0; padding: 0; white-space: nowrap; clip-path: inset(100%); clip: rect(0 0 0 0); overflow: hidden;}
+
+
+
+
 /* BASE STYLES */
+
+html{
+  font-size:125%;
+}
 
 *{
   --green:#0cc46a;
@@ -59,15 +67,26 @@ header{
 }
 
 h1{
+  margin:10px;
   font-family:'Poppins',sans-serif;
   font-weight:normal;
 }
 
-
+h2{
+  margin:10px;
+}
 
 .strongFont{
   font-weight:bold;
   color:var(--green);
+}
+input{
+  padding:2px 6px;
+  font-family:'Poppins',sans-serif;
+
+}
+input::placeholder{
+  font-family:'Poppins',sans-serif;
 }
 /* POPUP BOXES */
 
@@ -92,10 +111,48 @@ h1{
   border-radius:10px;
   padding:20px 40px;
   height:max-content;
-  margin:50% auto;
+  margin: auto;
   text-align: center;
   display:flex;
   flex-direction:column;
+}
+.addPayeePopup label{
+  padding-bottom:10px;
+}
+
+.actionButton{
+  display:flex;
+  justify-content:space-evenly;
+  padding-top:10px;
+}
+
+.actionButton button{
+  font-family:'Poppins',sans-serif;
+  border:none;
+  border-radius:4px;
+  padding:4px 8px;
+}
+
+fieldset{
+  border:none;
+}
+
+.addItemPopup label{
+  padding:10px;
+}
+
+/* ADD ITEM POP UP */
+.addItemPopup fieldset{
+  display:flex;
+  flex-direction:column;
+}
+
+.addItemPopup label{
+  text-align-last: left;
+}
+
+.addItem form{
+  padding: 10px;
 }
 
 
@@ -117,6 +174,7 @@ h1{
 
 .payeeBox{
   display:flex;
+  flex-direction:column;
   justify-content: center;
   align-items: center;
   width:100px;
@@ -125,6 +183,9 @@ h1{
   background-color:lightskyblue;
   /* text-align: center; */
   position: relative;
+}
+.payeeBox p {
+  margin:0;
 }
 
 .payeeBox button{
@@ -149,6 +210,7 @@ h1{
   display:flex;
   flex-wrap:wrap;
   text-align: center;
+  margin:10px 0;
   /* justify-content:space-evenly; */
 }
 
@@ -167,4 +229,7 @@ h1{
   flex-direction:column;
 }
 
+.subtotalDiv{
+  display:flex;
+}
 

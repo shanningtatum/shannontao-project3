@@ -13,8 +13,17 @@ const MainContainer = () => {
   return (
     <main id="mainContent">
       <Payee userInput={userInput} setUserInput={setUserInput} />
-      <MenuItem userInput={userInput} setUserInput={setUserInput} />
-      <Fees />
+      <MenuItem
+        userInput={userInput}
+        setUserInput={setUserInput}
+        subtotalInput={subtotalInput}
+        setSubtotal={setSubtotal}
+      />
+      <Fees
+        userInput={userInput}
+        subtotalInput={subtotalInput}
+        setSubtotal={setSubtotal}
+      />
 
       {/* <Payee />
       <MenuItem />
