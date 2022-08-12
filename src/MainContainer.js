@@ -8,10 +8,12 @@ import { useState } from "react";
 const MainContainer = () => {
   const [userInput, setUserInput] = useState([]);
 
+  const [subtotalInput, setSubtotal] = useState("");
+
   return (
     <main id="mainContent">
       <Payee userInput={userInput} setUserInput={setUserInput} />
-      {/* <MenuItem userInput={userInput} setUserInput={setUserInput} /> */}
+      <MenuItem userInput={userInput} setUserInput={setUserInput} />
       <Fees />
 
       {/* <Payee />

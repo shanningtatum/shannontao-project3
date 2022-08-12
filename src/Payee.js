@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import firebase from "./firebase";
-import { getDatabase, push, ref, onValue, remove } from "firebase/database";
+import {
+  getDatabase,
+  push,
+  ref,
+  onValue,
+  remove,
+  update,
+  set,
+} from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
@@ -8,7 +16,26 @@ const Payee = ({ userInput, setUserInput }) => {
   // set state for inputs
   const [payeeName, setPayeeName] = useState([]);
 
+  const database = getDatabase(firebase);
+  const dbRef = ref(database);
+
+  let currentUsers;
+
   // look into make database and dbref global variables
+
+  // ULTIMATELY...
+
+  // name: payeeName,
+  // orders: [
+  //  {
+  //     itemName:itemName,
+  //     itemPrice:itemPrice,
+  //   }
+  //  {
+  //     itemName:'Caesar Salad',
+  //     itemPrice:14.99,
+  //   }
+  // ]
 
   useEffect(() => {
     const database = getDatabase(firebase);
@@ -19,10 +46,12 @@ const Payee = ({ userInput, setUserInput }) => {
       const newState = [];
 
       for (let key in data) {
-        const newUser = {
-          name: payeeName,
+        const userInfo = {
+          key: key,
+          name: data[key],
         };
-        newState.push({ key: key, newUser });
+        newState.push({ userInfo });
+        currentUsers = userInfo;
       }
 
       setUserInput(newState);
@@ -33,6 +62,7 @@ const Payee = ({ userInput, setUserInput }) => {
   const addPayeeHandle = () => {
     const addPayeePopup = document.querySelector(".addPayeePopup");
     addPayeePopup.classList.toggle("active");
+    setPayeeName("");
   };
 
   // close popups
@@ -40,34 +70,29 @@ const Payee = ({ userInput, setUserInput }) => {
     e.preventDefault();
     const addPayeePopup = document.querySelector(".addPayeePopup");
     addPayeePopup.classList.toggle("active");
-    setPayeeName("");
   };
 
   // handle input change
   const handlePayeeChange = (e) => {
-    setPayeeName(e.target.value);
+    setPayeeName({ name: e.target.value });
   };
 
   // submit button action
   const storePayeeName = (e) => {
     e.preventDefault();
-    const database = getDatabase(firebase);
-    const dbRef = ref(database);
 
     if (payeeName) {
-      push(dbRef, userInput);
+      push(dbRef, payeeName);
       const addPayeePopup = document.querySelector(".addPayeePopup");
       addPayeePopup.classList.toggle("active");
-      setPayeeName("");
     } else {
       alert("enter a value!");
     }
   };
 
   const deletePayee = (payeeId) => {
-    const database = getDatabase(firebase);
-    const dbRef = ref(database, `/${payeeId}`);
-    remove(dbRef);
+    const deleteRef = ref(database, `/${payeeId}`);
+    remove(deleteRef);
   };
 
   return (
@@ -80,7 +105,7 @@ const Payee = ({ userInput, setUserInput }) => {
             name="payeeName"
             placeholder="ex: Shannon"
             onChange={handlePayeeChange}
-            value={payeeName}
+            // value={payeeName}
           />
           <button onClick={storePayeeName}>Submit</button>
           <button onClick={closePayeeButton}>Cancel</button>
@@ -99,17 +124,12 @@ const Payee = ({ userInput, setUserInput }) => {
             </button>
           </li>
           {
-            // create another variable that is userinput.name and map that instead
-            userInput.map((name) => {
-              console.log(name);
+            userInput.map((userObj, index) => {
+              // console.log(userInput);
               return (
-                <li className={`payeeBox`}>
-                  <p>{name.name}</p>
-                  <button
-                    onClick={() => {
-                      deletePayee(name.key);
-                    }}
-                  >
+                <li className="payeeBox" key={index}>
+                  <p>{userObj.userInfo.name.name}</p>
+                  <button onClick={() => deletePayee(userObj.userInfo.key)}>
                     <FontAwesomeIcon icon={faXmark} />
                   </button>
                 </li>
@@ -127,3 +147,5 @@ export default Payee;
 
 // ask user for payee name
 // update payee name variable using setPayeeName
+
+// <FontAwesomeIcon icon={faXmark} />

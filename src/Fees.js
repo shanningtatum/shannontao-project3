@@ -2,14 +2,13 @@ import { useState } from "react";
 
 const Fees = () => {
   // set up states for the different inputs
-  const [subtotalInput, setSubtotal] = useState("");
   const [serviceFeeInput, setServiceFee] = useState("");
   const [deliveryFeeInput, setDeliveryFee] = useState("");
 
   // get the handle change for subtotal
-  const handleSubtotal = (e) => {
-    setSubtotal(e.target.value);
-  };
+  // const handleSubtotal = (e) => {
+  //   setSubtotal(e.target.value);
+  // };
 
   // get the handle change for service fee
   const handleServiceFee = (e) => {
@@ -24,7 +23,7 @@ const Fees = () => {
   const calculateBill = (e, subtotal, serviceFee, deliveryFee) => {
     e.preventDefault();
     console.log(subtotal, serviceFee, deliveryFee);
-    setSubtotal("");
+    // setSubtotal("");
     setServiceFee("");
     setDeliveryFee("");
   };
@@ -35,13 +34,13 @@ const Fees = () => {
         <h2>Fees</h2>
         <form action="">
           <div className="subtotalDiv">
-            <label htmlFor="subtotalInput">Subtotal</label>
-            <input
+            <label htmlFor="subtotalInput">Subtotal: </label>
+            {/* <input
               type="number"
               name="subtotalInput"
               onChange={handleSubtotal}
               value={subtotalInput}
-            />
+            /> */}
           </div>
           <div className="serviceFeeDiv">
             <label htmlFor="serviceFeeInput">Service Fee</label>
@@ -67,9 +66,7 @@ const Fees = () => {
           </div>
         </form>
         <button
-          onClick={(e) =>
-            calculateBill(e, subtotalInput, serviceFeeInput, deliveryFeeInput)
-          }
+          onClick={(e) => calculateBill(e, serviceFeeInput, deliveryFeeInput)}
         >
           Calculate
         </button>

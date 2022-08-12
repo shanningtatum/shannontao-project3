@@ -1,23 +1,27 @@
 import { useState } from "react";
 import firebase from "./firebase";
-import { getDatabase, update, ref } from "firebase/database";
+import { getDatabase, update, ref, push, set, remove } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const MenuItem = ({ userInput, setUserInput }) => {
+  const database = getDatabase(firebase);
+
   // useState itemName
   const [itemName, setItemName] = useState([]);
-
   // useState itemPrice
   const [itemPrice, setItemPrice] = useState([]);
-
+  // useState item Key
   const [itemKey, setItemKey] = useState([]);
 
+  // triggers add item popup
   const addItemHandle = () => {
     const addItemPopup = document.querySelector(".addItemPopup");
     addItemPopup.classList.toggle("active");
+    setItemName("");
+    setItemPrice("");
   };
-
+  // close add item popup
   const closeItemButton = function (e) {
     e.preventDefault();
     const addItemPopup = document.querySelector(".addItemPopup");
@@ -39,6 +43,7 @@ const MenuItem = ({ userInput, setUserInput }) => {
   // read options value
   const readOptions = (e) => {
     e.preventDefault();
+    // console.log(e.target.value);
     setItemKey(e.target.value);
   };
   // store input value
@@ -48,15 +53,26 @@ const MenuItem = ({ userInput, setUserInput }) => {
     if (itemPrice && itemName) {
       const addItemPopup = document.querySelector(".addItemPopup");
       const database = getDatabase(firebase);
-      const dbRef = ref(database, `/${itemKey}`);
+      const dbRef = ref(database, `/${itemKey}/order`);
       addItemPopup.classList.toggle("active");
 
-      // update(dbRef, { order: [{ itemName: itemName, itemPrice: itemPrice }] });
-      setItemName("");
-      setItemPrice("");
+      const userOrder = {
+        itemName: itemName,
+        itemPrice: itemPrice,
+      };
+      console.log(userInput);
+      return update(dbRef, userOrder);
     } else {
       alert("enter a value!");
     }
+  };
+
+  // remove item on click handle
+  const removeItem = (orderKey) => {
+    console.log(orderKey);
+    const deleteRef = ref(database, `/${orderKey}/order`);
+    console.log(deleteRef);
+    remove(deleteRef);
   };
 
   return (
@@ -90,9 +106,15 @@ const MenuItem = ({ userInput, setUserInput }) => {
               className="selectPayee"
               onChange={(e) => readOptions(e)}
             >
+              <option value="placeholder" disabled selected>
+                Select Payee
+              </option>
               {userInput.map((username) => {
+                // console.log(username);
                 return (
-                  <option value={username.key}>{username.userInfo.name}</option>
+                  <option value={username.userInfo.key}>
+                    {username.userInfo.name.name}
+                  </option>
                 );
               })}
             </select>
@@ -109,9 +131,21 @@ const MenuItem = ({ userInput, setUserInput }) => {
               <FontAwesomeIcon icon={faPlus} className="addIcon" />
             </button>
           </li>
-          {
-            // RENDER ORDER LIST
-          }
+          {userInput.map((userOrder) => {
+            console.log(userOrder);
+            if (userOrder.userInfo.name.order == undefined) {
+              // alert("missing order");
+            } else {
+              return (
+                <li className="payeeBox">
+                  <p>{userOrder.userInfo.name.order.itemName}</p>
+                  <button onClick={() => removeItem(userOrder.userInfo.key)}>
+                    <FontAwesomeIcon icon={faXmark} />
+                  </button>
+                </li>
+              );
+            }
+          })}
         </ul>
       </div>
     </section>

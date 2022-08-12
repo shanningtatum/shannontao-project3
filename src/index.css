@@ -143,24 +143,21 @@ h1{
   background-color:crimson;
 }
 
-.payeeList{
+.payeeList, .orderList{
   list-style:none;
   padding:0;
   display:flex;
   flex-wrap:wrap;
+  text-align: center;
   /* justify-content:space-evenly; */
 }
 
-.payeeList li {
+.payeeList li, .orderList li {
   margin:0 10px 10px 0;
 }
 
 /* MENU ITEM */
 
-.orderList{
-  list-style:none;
-  padding:0;
-}
 
 
 /* EXTRA FEES */
