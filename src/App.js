@@ -1,6 +1,7 @@
 import firebase from "./firebase";
 import Header from "./Header";
 import MainContainer from "./MainContainer";
+import "./App.css";
 
 function App() {
   return (

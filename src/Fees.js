@@ -4,6 +4,7 @@ const Fees = ({ userInput, subtotalInput, setSubtotal }) => {
   // set up states for the different inputs
   const [serviceFeeInput, setServiceFee] = useState("");
   const [deliveryFeeInput, setDeliveryFee] = useState("");
+  const [grandTotalInput, setGrandTotal] = useState("");
   // empty array to store order values
   const orderValues = [];
   let orderSubtotal = 0;
@@ -23,12 +24,45 @@ const Fees = ({ userInput, subtotalInput, setSubtotal }) => {
     setDeliveryFee(e.target.value);
   };
 
-  const calculateBill = (e, subtotal, serviceFee, deliveryFee) => {
+  // get the handle change for grand total
+  const handleGrandTotal = (e) => {
+    setGrandTotal(e.target.value);
+  };
+
+  const calculateBill = (e, serviceFee, deliveryFee, grandTotal) => {
     e.preventDefault();
-    console.log(subtotal, serviceFee, deliveryFee);
+
+    // calculate how much service fee is per person
+    const splitService = serviceFee / userInput.length;
+    // console.log(splitService);
+
+    const splitDelivery = deliveryFee / userInput.length;
+    // console.log(splitDelivery);
+
+    const totalSplit = splitService + splitDelivery;
+
+    console.log(totalSplit);
+
+    // calcualate the remaining amount to determine taxes
+    const orderTax =
+      +grandTotal - (+serviceFee + +deliveryFee + +orderSubtotal);
+    // console.log(orderTax.toFixed(2));
+
+    // calculate the tax percentage
+    const taxPercentage = orderTax / orderSubtotal;
+
+    console.log(parseInt(Math.ceil(parseFloat(taxPercentage) * 100)));
+
+    // console.log(totalSplit);
+
+    userInput.map((cost) => {
+      return console.log(+cost.userInfo.name.order.itemPrice + totalSplit);
+    });
+
     setSubtotal("");
     setServiceFee("");
     setDeliveryFee("");
+    setGrandTotal("");
   };
 
   return (
@@ -61,30 +95,47 @@ const Fees = ({ userInput, subtotalInput, setSubtotal }) => {
           </div>
           <div className="serviceFeeDiv">
             <label htmlFor="serviceFeeInput">Service Fee</label>
-            <input
-              type="number"
-              name="serviceFeeInput"
-              onChange={handleServiceFee}
-              value={serviceFeeInput}
-            />
+            <div className="inputField">
+              <span>$</span>
+              <input
+                type="number"
+                inputMode="numeric"
+                name="serviceFeeInput"
+                onChange={handleServiceFee}
+                value={serviceFeeInput}
+              />
+            </div>
           </div>
           <div className="deliveryFeeDiv">
             <label htmlFor="deliveryFeeInput">Delivery Fee</label>
-            <input
-              type="number"
-              name="deliveryFeeInput"
-              onChange={handleDeliveryFee}
-              value={deliveryFeeInput}
-            />
+            <div className="inputField">
+              <span>$</span>
+              <input
+                type="number"
+                inputMode="numeric"
+                name="deliveryFeeInput"
+                onChange={handleDeliveryFee}
+                value={deliveryFeeInput}
+              />
+            </div>
           </div>
           <div className="grandTotalDiv">
             <label htmlFor="grandTotalInput">Grand Total</label>
-            <input type="text" name="grandTotalInput" />
+            <div className="inputField">
+              <span>$</span>
+              <input
+                type="number"
+                name="grandTotalInput"
+                onChange={handleGrandTotal}
+                value={grandTotalInput}
+              />
+            </div>
           </div>
         </form>
         <button
+          className="calculateButton"
           onClick={(e) =>
-            calculateBill(e, subtotalInput, serviceFeeInput, deliveryFeeInput)
+            calculateBill(e, serviceFeeInput, deliveryFeeInput, grandTotalInput)
           }
         >
           Calculate

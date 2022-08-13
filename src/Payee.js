@@ -1,14 +1,6 @@
 import { useState, useEffect } from "react";
 import firebase from "./firebase";
-import {
-  getDatabase,
-  push,
-  ref,
-  onValue,
-  remove,
-  update,
-  set,
-} from "firebase/database";
+import { getDatabase, push, ref, onValue, remove } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
@@ -18,8 +10,6 @@ const Payee = ({ userInput, setUserInput }) => {
 
   const database = getDatabase(firebase);
   const dbRef = ref(database);
-
-  let currentUsers;
 
   // look into make database and dbref global variables
 
@@ -50,8 +40,7 @@ const Payee = ({ userInput, setUserInput }) => {
           key: key,
           name: data[key],
         };
-        newState.push({ userInfo });
-        currentUsers = userInfo;
+        newState.push({ key: key, userInfo });
       }
 
       setUserInput(newState);
@@ -85,6 +74,7 @@ const Payee = ({ userInput, setUserInput }) => {
       push(dbRef, payeeName);
       const addPayeePopup = document.querySelector(".addPayeePopup");
       addPayeePopup.classList.toggle("active");
+      setPayeeName("");
     } else {
       alert("enter a value!");
     }
@@ -97,7 +87,7 @@ const Payee = ({ userInput, setUserInput }) => {
 
   return (
     <section className="addPayee">
-      <div className="addPayeePopup popup">
+      <div className="addPayeePopup popup" tabIndex="0">
         <form action="">
           <label htmlFor="payeeName">Payee Name</label>
           <input
@@ -108,8 +98,8 @@ const Payee = ({ userInput, setUserInput }) => {
             defaultValue=""
           />
           <div className="actionButton">
-            <button onClick={closePayeeButton}>Cancel</button>
             <button onClick={storePayeeName}>Submit</button>
+            <button onClick={closePayeeButton}>Cancel</button>
           </div>
         </form>
       </div>

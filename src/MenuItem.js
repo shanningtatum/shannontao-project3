@@ -1,11 +1,21 @@
 import { useState } from "react";
 import firebase from "./firebase";
-import { getDatabase, update, ref, push, set, remove } from "firebase/database";
+import {
+  getDatabase,
+  update,
+  ref,
+  push,
+  set,
+  remove,
+  get,
+} from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-const MenuItem = ({ userInput, setUserInput, subtotal, setSubtotal }) => {
+const MenuItem = ({ userInput }) => {
   const database = getDatabase(firebase);
+  const dbRef = ref(database);
+  const menuItemData = {};
 
   // useState itemName
   const [itemName, setItemName] = useState([]);
@@ -14,6 +24,19 @@ const MenuItem = ({ userInput, setUserInput, subtotal, setSubtotal }) => {
   // useState item Key
   const [itemKey, setItemKey] = useState([]);
 
+  // get menu items
+  // get(dbRef).then((dbObj) => {
+  //   if (dbObj.exists()) {
+  //     menuItemData.push(dbObj.val());
+
+  //     for (let item in menuItemData) {
+  //       console.log(item);
+  //     }
+  //   } else {
+  //     console.log("no data");
+  //   }
+  // });
+
   // triggers add item popup
   const addItemHandle = () => {
     const addItemPopup = document.querySelector(".addItemPopup");
@@ -21,6 +44,7 @@ const MenuItem = ({ userInput, setUserInput, subtotal, setSubtotal }) => {
     setItemName("");
     setItemPrice("");
   };
+
   // close add item popup
   const closeItemButton = function (e) {
     e.preventDefault();
@@ -46,6 +70,7 @@ const MenuItem = ({ userInput, setUserInput, subtotal, setSubtotal }) => {
     // console.log(e.target.value);
     setItemKey(e.target.value);
   };
+
   // store input value
   const storeItemName = (e) => {
     e.preventDefault();
@@ -53,23 +78,21 @@ const MenuItem = ({ userInput, setUserInput, subtotal, setSubtotal }) => {
     if (itemPrice && itemName) {
       const addItemPopup = document.querySelector(".addItemPopup");
       const database = getDatabase(firebase);
-      const dbRef = ref(database, `/${itemKey}`);
+      const dbRef = ref(database, `/${itemKey}/order`);
       addItemPopup.classList.toggle("active");
 
       const userOrder = {
-        order: {
-          itemName: itemName,
-          itemPrice: itemPrice,
-        },
+        itemName: itemName,
+        itemPrice: itemPrice,
       };
       console.log(userInput);
-      return update(dbRef, userOrder);
+      return push(dbRef, userOrder);
     } else {
       alert("enter a value!");
     }
   };
 
-  // remove item on click handle
+  // remove order node on handle click
   const removeItem = (orderKey) => {
     const deleteRef = ref(database, `/${orderKey}/order`);
     remove(deleteRef);
@@ -77,7 +100,7 @@ const MenuItem = ({ userInput, setUserInput, subtotal, setSubtotal }) => {
 
   return (
     <section className="addItem">
-      <div className="addItemPopup popup">
+      <div className="addItemPopup popup" tabIndex="0">
         <form action="">
           <fieldset>
             <label htmlFor="itemName">Item Name</label>
@@ -136,19 +159,42 @@ const MenuItem = ({ userInput, setUserInput, subtotal, setSubtotal }) => {
             </button>
           </li>
           {userInput.map((userOrder) => {
-            // console.log(userOrder);
-            if (userOrder.userInfo.name.order == undefined) {
-              // alert("missing order");
-            } else {
-              return (
-                <li className="payeeBox">
-                  <p>{userOrder.userInfo.name.order.itemName}</p>
-                  <p>{userOrder.userInfo.name.order.itemPrice}</p>
-                  <button onClick={() => removeItem(userOrder.userInfo.key)}>
-                    <FontAwesomeIcon icon={faXmark} />
-                  </button>
-                </li>
-              );
+            // ONLY runs these lines of code if there is a userOrder associated with the person
+            if (userOrder.userInfo.name.order) {
+              // console.log(userOrder.userInfo.name.order);
+
+              const newObj = userOrder.userInfo.name.order;
+              console.log(" new object console");
+              console.log(newObj);
+              let orderItem;
+              let orderPrice;
+
+              for (let key in newObj) {
+                // orderItem = newObj[key].itemName;
+                // orderPrice = newObj[key].itemPrice;
+                const obj = newObj[key];
+
+                if (!newObj.hasOwnProperty(key)) continue;
+
+                console.log(obj);
+
+                for (let item in obj) {
+                  console.log(obj.itemName);
+
+                  if (!obj.hasOwnProperty(item)) continue;
+                  return (
+                    <li className="payeeBox">
+                      <p>{obj.itemName}</p>
+                      <p>{obj.itemPrice}</p>
+                      <button
+                        onClick={() => removeItem(userOrder.userInfo.key)}
+                      >
+                        <FontAwesomeIcon icon={faXmark} />
+                      </button>
+                    </li>
+                  );
+                }
+              }
             }
           })}
         </ul>
@@ -158,17 +204,3 @@ const MenuItem = ({ userInput, setUserInput, subtotal, setSubtotal }) => {
 };
 
 export default MenuItem;
-
-// {
-//   name:'shannon',
-//   orders:{
-//     orderItem:'chicken'
-//     price: 12.99
-//   },
-//   {
-//     orderItem:'tacos'
-//     price: 12.99
-//   }
-
-//   ]
-// }
