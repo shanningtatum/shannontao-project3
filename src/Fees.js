@@ -7,6 +7,7 @@ const Fees = ({ userInput, subtotalInput, setSubtotal }) => {
   const [grandTotalInput, setGrandTotal] = useState("");
   // empty array to store order values
   const orderValues = [];
+  const userOrders = [];
   let orderSubtotal = 0;
 
   // get the handle change for subtotal
@@ -73,12 +74,16 @@ const Fees = ({ userInput, subtotalInput, setSubtotal }) => {
           <div className="subtotalDiv">
             <p>Subtotal:&nbsp;</p>
             {userInput.map((orderTotal) => {
+              const priceArray = orderTotal.userInfo.name.order;
+
               // checks if this variable exists, if it does, run the following code
               if (orderTotal.userInfo.name.order) {
-                const priceOfItem = orderTotal.userInfo.name.order.itemPrice;
-                // console.log(parseFloat(priceOfItem));
+                for (let key in priceArray) {
+                  const priceOfItem = priceArray[key].itemPrice;
+                  orderValues.push(parseFloat(priceOfItem));
 
-                orderValues.push(parseFloat(priceOfItem));
+                  // console.log(Object.values(priceArray[key]));
+                }
 
                 const initialValue = 0;
                 const sumOfOrders = orderValues.reduce(

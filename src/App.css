@@ -73,10 +73,12 @@ input::placeholder{
 .inputField{
   background-color:white;
   border:1px solid grey;
+  border-radius:10px;
 }
 .inputField input{
   outline:none;
   border:none;
+  border-radius:10px;
 }
 
 input[type=number] {

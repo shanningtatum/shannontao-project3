@@ -15,7 +15,9 @@ import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 const MenuItem = ({ userInput }) => {
   const database = getDatabase(firebase);
   const dbRef = ref(database);
-  const menuItemData = {};
+
+  // store ORDER array
+  const [orderArray, setOrderArray] = useState([]);
 
   // useState itemName
   const [itemName, setItemName] = useState([]);
@@ -67,7 +69,6 @@ const MenuItem = ({ userInput }) => {
   // read options value
   const readOptions = (e) => {
     e.preventDefault();
-    // console.log(e.target.value);
     setItemKey(e.target.value);
   };
 
@@ -85,7 +86,7 @@ const MenuItem = ({ userInput }) => {
         itemName: itemName,
         itemPrice: itemPrice,
       };
-      console.log(userInput);
+      // console.log(userInput);
       return push(dbRef, userOrder);
     } else {
       alert("enter a value!");
@@ -94,7 +95,10 @@ const MenuItem = ({ userInput }) => {
 
   // remove order node on handle click
   const removeItem = (orderKey) => {
+    console.log(orderKey);
     const deleteRef = ref(database, `/${orderKey}/order`);
+
+    console.log(deleteRef.child);
     remove(deleteRef);
   };
 
@@ -161,40 +165,57 @@ const MenuItem = ({ userInput }) => {
           {userInput.map((userOrder) => {
             // ONLY runs these lines of code if there is a userOrder associated with the person
             if (userOrder.userInfo.name.order) {
+              // console.log("userinfo");
               // console.log(userOrder.userInfo.name.order);
 
+              // create a new object based on orders
               const newObj = userOrder.userInfo.name.order;
-              console.log(" new object console");
-              console.log(newObj);
-              let orderItem;
-              let orderPrice;
+              const newOrders = [];
 
+              // loop through new object to get key
               for (let key in newObj) {
-                // orderItem = newObj[key].itemName;
-                // orderPrice = newObj[key].itemPrice;
-                const obj = newObj[key];
+                const orderKey = {
+                  key: key,
+                  itemName: newObj[key].itemName,
+                  itemPrice: newObj[key].itemPrice,
+                };
 
-                if (!newObj.hasOwnProperty(key)) continue;
+                newOrders.push(orderKey);
 
-                console.log(obj);
+                // return Object.values(orderKey).map((eachOrder) => {
+                //   return (
+                //     <li className="payeeBox">
+                //       <p>{eachOrder.itemName}</p>
+                //       <p>{eachOrder.itemPrice}</p>
+                //       <button onClick={() => removeItem()}>
+                //         <FontAwesomeIcon icon={faXmark} />
+                //       </button>
+                //     </li>
+                //   );
+                // });
 
-                for (let item in obj) {
-                  console.log(obj.itemName);
+                // return orderArray.map((eachOrder) => {
+                //   console.log(eachOrder);
 
-                  if (!obj.hasOwnProperty(item)) continue;
-                  return (
-                    <li className="payeeBox">
-                      <p>{obj.itemName}</p>
-                      <p>{obj.itemPrice}</p>
-                      <button
-                        onClick={() => removeItem(userOrder.userInfo.key)}
-                      >
-                        <FontAwesomeIcon icon={faXmark} />
-                      </button>
-                    </li>
-                  );
-                }
+                // });
               }
+
+              return newOrders.map((orders) => {
+                return (
+                  <li className="payeeBox">
+                    <p>{orders.itemName}</p>
+                    <p>{orders.itemPrice}</p>
+                    <button onClick={() => removeItem(userOrder.userInfo.key)}>
+                      <FontAwesomeIcon icon={faXmark} />
+                    </button>
+                  </li>
+                );
+              });
+
+              // create an array based on values of the new object so i can go through them as .map
+              // const orderArray = Object.values(newObj);
+
+              // returns all the values of the order Array to display items
             }
           })}
         </ul>
