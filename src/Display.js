@@ -1,11 +1,11 @@
-function Display({ userInput, splitFees }) {
+function Display({ userInput, splitFees, taxRate }) {
   return (
     <section className="displaySection">
       <h2>Owed</h2>
       <div className="renderPayees">
         <ul>
           {userInput.map((payee) => {
-            console.log(payee.userInfo.name.name);
+            // console.log(payee.userInfo.name.name);
             const orderArray = payee.userInfo.name.order;
             const newArray = [];
             const priceArray = [];
@@ -19,7 +19,13 @@ function Display({ userInput, splitFees }) {
               return previous + current;
             }, 0);
 
-            console.log(priceSum);
+            // console.log(`price sum ${priceSum}`);
+
+            const feeAndPriceSum = +priceSum + +splitFees;
+
+            console.log(splitFees);
+
+            console.log(`fee and price ${feeAndPriceSum}`);
 
             return (
               <li className="payeeList">
@@ -32,7 +38,7 @@ function Display({ userInput, splitFees }) {
                     </>
                   );
                 })}
-                <p>Total: $ {priceSum.toFixed(2)}</p>
+                <p>Total: $ {feeAndPriceSum + feeAndPriceSum * taxRate}</p>
               </li>
             );
           })}

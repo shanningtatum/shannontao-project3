@@ -8,14 +8,20 @@ import { useState } from "react";
 
 const MainContainer = () => {
   const [userInput, setUserInput] = useState([]);
-  const [splitFees, setSplitFees] = useState([]);
+  const [splitFees, setSplitFees] = useState("");
+  const [taxRate, setTaxRate] = useState("");
 
   return (
     <main id="mainContent">
       <Payee userInput={userInput} setUserInput={setUserInput} />
       <MenuItem userInput={userInput} />
-      <Fees userInput={userInput} setSplitFees={setSplitFees} />
-      <Display userInput={userInput} splitFees={splitFees} />
+      <Fees
+        userInput={userInput}
+        setSplitFees={setSplitFees}
+        taxRate={taxRate}
+        setTaxRate={setTaxRate}
+      />
+      <Display userInput={userInput} splitFees={splitFees} taxRate={taxRate} />
     </main>
   );
 };

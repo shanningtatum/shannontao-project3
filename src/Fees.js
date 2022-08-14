@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Fees = ({ userInput, setSplitFees }) => {
+const Fees = ({ userInput, setSplitFees, taxRate, setTaxRate }) => {
   // set up states for the different inputs
   const [serviceFeeInput, setServiceFee] = useState("");
   const [deliveryFeeInput, setDeliveryFee] = useState("");
@@ -57,6 +57,7 @@ const Fees = ({ userInput, setSplitFees }) => {
     // ADD the split service fee and the split delivery fee to the user's order
     // determine the tax rate
     // multiply the tax rate to the order + service + delivery
+    // split the tip fee
     // return the amount that person has to pay
 
     // calculate how much service fee is per person
@@ -71,7 +72,20 @@ const Fees = ({ userInput, setSplitFees }) => {
     const splitTip = tipInput / userInput.length;
     // console.log(`tip:${splitTip}`);
 
-    const totalSplit = splitService + splitDelivery + splitTip;
+    // TAX RATE :
+
+    const taxPercentage =
+      taxInput / (+orderSubtotal + +serviceFee + +deliveryFee);
+
+    console.log(taxPercentage);
+
+    setTaxRate(taxPercentage);
+
+    // tax amount / subtotal + service fee + delivery fee
+
+    const totalSplit = splitService + splitDelivery;
+
+    setSplitFees(totalSplit);
 
     // console.log(`toptal split ${totalSplit}`);
   };
@@ -107,7 +121,7 @@ const Fees = ({ userInput, setSplitFees }) => {
                   initialValue
                 );
 
-                orderSubtotal = sumOfOrders.toFixed(2);
+                orderSubtotal = sumOfOrders;
               }
 
               // if it doesn't exist, don't do anything

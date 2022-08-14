@@ -1,8 +1,7 @@
 function Footer() {
   return (
     <footer>
-      Created by <a href="https://www.shannontao.dev/">Shannon Tao</a> @ Juno
-      College
+      Created by <a href="https://www.shannontao.dev/">Shannon</a>
     </footer>
   );
 }
