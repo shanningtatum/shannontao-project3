@@ -11,22 +11,6 @@ const Payee = ({ userInput, setUserInput }) => {
   const database = getDatabase(firebase);
   const dbRef = ref(database);
 
-  // look into make database and dbref global variables
-
-  // ULTIMATELY...
-
-  // name: payeeName,
-  // orders: [
-  //  {
-  //     itemName:itemName,
-  //     itemPrice:itemPrice,
-  //   }
-  //  {
-  //     itemName:'Caesar Salad',
-  //     itemPrice:14.99,
-  //   }
-  // ]
-
   useEffect(() => {
     const database = getDatabase(firebase);
     const dbRef = ref(database);
@@ -95,7 +79,6 @@ const Payee = ({ userInput, setUserInput }) => {
             name="payeeName"
             placeholder="ex: Shannon"
             onChange={handlePayeeChange}
-            defaultValue=""
           />
           <div className="actionButton">
             <button onClick={storePayeeName}>Submit</button>
@@ -105,7 +88,6 @@ const Payee = ({ userInput, setUserInput }) => {
       </div>
       <div className="wrapper">
         <h2>Add Payee</h2>
-
         <ul className="payeeList">
           <li>
             <button
@@ -116,10 +98,11 @@ const Payee = ({ userInput, setUserInput }) => {
             </button>
           </li>
           {
+            // RENDER PAYEE LIST
             userInput.map((userObj, index) => {
               // console.log(userInput);
               return (
-                <li className="payeeBox" key={index}>
+                <li className={`payeeBox ${index}`} key={index}>
                   <p>{userObj.userInfo.name.name}</p>
                   <button onClick={() => deletePayee(userObj.userInfo.key)}>
                     <FontAwesomeIcon icon={faXmark} />
@@ -127,7 +110,6 @@ const Payee = ({ userInput, setUserInput }) => {
                 </li>
               );
             })
-            // RENDER PAYEE LIST
           }
         </ul>
       </div>
@@ -136,8 +118,3 @@ const Payee = ({ userInput, setUserInput }) => {
 };
 
 export default Payee;
-
-// ask user for payee name
-// update payee name variable using setPayeeName
-
-// <FontAwesomeIcon icon={faXmark} />

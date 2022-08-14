@@ -1,23 +1,12 @@
 import { useState } from "react";
 import firebase from "./firebase";
-import {
-  getDatabase,
-  update,
-  ref,
-  push,
-  set,
-  remove,
-  get,
-} from "firebase/database";
+import { getDatabase, ref, push, remove } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const MenuItem = ({ userInput }) => {
   const database = getDatabase(firebase);
-  const dbRef = ref(database);
-
-  // store ORDER array
-  const [orderArray, setOrderArray] = useState([]);
+  // const dbRef = ref(database);
 
   // useState itemName
   const [itemName, setItemName] = useState([]);
@@ -25,19 +14,6 @@ const MenuItem = ({ userInput }) => {
   const [itemPrice, setItemPrice] = useState([]);
   // useState item Key
   const [itemKey, setItemKey] = useState([]);
-
-  // get menu items
-  // get(dbRef).then((dbObj) => {
-  //   if (dbObj.exists()) {
-  //     menuItemData.push(dbObj.val());
-
-  //     for (let item in menuItemData) {
-  //       console.log(item);
-  //     }
-  //   } else {
-  //     console.log("no data");
-  //   }
-  // });
 
   // triggers add item popup
   const addItemHandle = () => {
@@ -86,19 +62,16 @@ const MenuItem = ({ userInput }) => {
         itemName: itemName,
         itemPrice: itemPrice,
       };
-      // console.log(userInput);
       return push(dbRef, userOrder);
     } else {
-      alert("enter a value!");
+      alert("Enter a value");
     }
   };
 
   // remove order node on handle click
-  const removeItem = (orderKey) => {
-    console.log(orderKey);
-    const deleteRef = ref(database, `/${orderKey}/order`);
+  const removeItem = (parentKey, childKey) => {
+    const deleteRef = ref(database, `/${parentKey}/order/${childKey}`);
 
-    console.log(deleteRef.child);
     remove(deleteRef);
   };
 
@@ -139,7 +112,6 @@ const MenuItem = ({ userInput }) => {
                 Select Payee
               </option>
               {userInput.map((username) => {
-                // console.log(username);
                 return (
                   <option value={username.userInfo.key}>
                     {username.userInfo.name.name}
@@ -162,60 +134,44 @@ const MenuItem = ({ userInput }) => {
               <FontAwesomeIcon icon={faPlus} className="addIcon" />
             </button>
           </li>
-          {userInput.map((userOrder) => {
+          {userInput.map((userOrder, findex) => {
+            console.log(findex);
             // ONLY runs these lines of code if there is a userOrder associated with the person
             if (userOrder.userInfo.name.order) {
-              // console.log("userinfo");
-              // console.log(userOrder.userInfo.name.order);
+              const parentNodeKey = userOrder.userInfo.key;
 
               // create a new object based on orders
               const newObj = userOrder.userInfo.name.order;
+
+              // array to store object if all needed information
               const newOrders = [];
 
               // loop through new object to get key
               for (let key in newObj) {
+                // create new object with parentkey, key, itemName and itemPrice
                 const orderKey = {
+                  parentKey: parentNodeKey,
                   key: key,
                   itemName: newObj[key].itemName,
                   itemPrice: newObj[key].itemPrice,
                 };
-
+                // push to newOrders array so we can .map through it
                 newOrders.push(orderKey);
-
-                // return Object.values(orderKey).map((eachOrder) => {
-                //   return (
-                //     <li className="payeeBox">
-                //       <p>{eachOrder.itemName}</p>
-                //       <p>{eachOrder.itemPrice}</p>
-                //       <button onClick={() => removeItem()}>
-                //         <FontAwesomeIcon icon={faXmark} />
-                //       </button>
-                //     </li>
-                //   );
-                // });
-
-                // return orderArray.map((eachOrder) => {
-                //   console.log(eachOrder);
-
-                // });
               }
 
-              return newOrders.map((orders) => {
+              return newOrders.map((orders, index) => {
                 return (
-                  <li className="payeeBox">
+                  <li className={`payeeBox ${index}`}>
                     <p>{orders.itemName}</p>
                     <p>{orders.itemPrice}</p>
-                    <button onClick={() => removeItem(userOrder.userInfo.key)}>
+                    <button
+                      onClick={() => removeItem(orders.parentKey, orders.key)}
+                    >
                       <FontAwesomeIcon icon={faXmark} />
                     </button>
                   </li>
                 );
               });
-
-              // create an array based on values of the new object so i can go through them as .map
-              // const orderArray = Object.values(newObj);
-
-              // returns all the values of the order Array to display items
             }
           })}
         </ul>

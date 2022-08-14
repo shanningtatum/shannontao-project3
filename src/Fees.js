@@ -1,68 +1,86 @@
 import { useState } from "react";
 
-const Fees = ({ userInput, subtotalInput, setSubtotal }) => {
+const Fees = ({ userInput, setSplitFees }) => {
   // set up states for the different inputs
   const [serviceFeeInput, setServiceFee] = useState("");
   const [deliveryFeeInput, setDeliveryFee] = useState("");
+  const [taxInput, setTax] = useState("");
+  const [tipInput, setTip] = useState("");
   const [grandTotalInput, setGrandTotal] = useState("");
+
   // empty array to store order values
   const orderValues = [];
-  const userOrders = [];
   let orderSubtotal = 0;
-
-  // get the handle change for subtotal
-  const handleSubtotal = (e) => {
-    setSubtotal(e.target.value);
-  };
 
   // get the handle change for service fee
   const handleServiceFee = (e) => {
     setServiceFee(e.target.value);
+    calculateBill(serviceFeeInput, deliveryFeeInput, taxInput, tipInput);
   };
 
   // get the handle change for delivery fee
   const handleDeliveryFee = (e) => {
     setDeliveryFee(e.target.value);
+    calculateBill(serviceFeeInput, deliveryFeeInput, taxInput, tipInput);
+  };
+
+  const handleTax = (e) => {
+    setTax(e.target.value);
+    calculateBill(serviceFeeInput, deliveryFeeInput, taxInput, tipInput);
+  };
+
+  const handleTip = (e) => {
+    setTip(e.target.value);
+    calculateBill(serviceFeeInput, deliveryFeeInput, taxInput, tipInput);
   };
 
   // get the handle change for grand total
-  const handleGrandTotal = (e) => {
-    setGrandTotal(e.target.value);
-  };
 
-  const calculateBill = (e, serviceFee, deliveryFee, grandTotal) => {
-    e.preventDefault();
+  const calculateBill = (serviceFee, deliveryFee, taxInput, tipInput) => {
+    // e.preventDefault();
+    setGrandTotal("");
+
+    setGrandTotal(
+      (
+        +orderSubtotal +
+        +serviceFeeInput +
+        +deliveryFeeInput +
+        +taxInput +
+        +tipInput
+      ).toFixed(2)
+    );
+
+    // FORMULA:
+    // get total cost of the user's order
+    // get the service fee (split)
+    // get the delivery fee (split)
+    // ADD the split service fee and the split delivery fee to the user's order
+    // determine the tax rate
+    // multiply the tax rate to the order + service + delivery
+    // return the amount that person has to pay
 
     // calculate how much service fee is per person
     const splitService = serviceFee / userInput.length;
-    // console.log(splitService);
+    // console.log(`service:${splitService}`);
+    console.log(serviceFee);
 
+    // calculates how much the delivery fee is per person
     const splitDelivery = deliveryFee / userInput.length;
-    // console.log(splitDelivery);
+    // console.log(`delivery:${splitDelivery}`);
 
-    const totalSplit = splitService + splitDelivery;
+    const splitTip = tipInput / userInput.length;
+    // console.log(`tip:${splitTip}`);
 
-    console.log(totalSplit);
+    const totalSplit = splitService + splitDelivery + splitTip;
 
-    // calcualate the remaining amount to determine taxes
-    const orderTax =
-      +grandTotal - (+serviceFee + +deliveryFee + +orderSubtotal);
-    // console.log(orderTax.toFixed(2));
+    // console.log(`toptal split ${totalSplit}`);
+  };
 
-    // calculate the tax percentage
-    const taxPercentage = orderTax / orderSubtotal;
-
-    console.log(parseInt(Math.ceil(parseFloat(taxPercentage) * 100)));
-
-    // console.log(totalSplit);
-
-    userInput.map((cost) => {
-      return console.log(+cost.userInfo.name.order.itemPrice + totalSplit);
-    });
-
-    setSubtotal("");
+  const clearButton = () => {
     setServiceFee("");
     setDeliveryFee("");
+    setTax("");
+    setTip("");
     setGrandTotal("");
   };
 
@@ -81,8 +99,6 @@ const Fees = ({ userInput, subtotalInput, setSubtotal }) => {
                 for (let key in priceArray) {
                   const priceOfItem = priceArray[key].itemPrice;
                   orderValues.push(parseFloat(priceOfItem));
-
-                  // console.log(Object.values(priceArray[key]));
                 }
 
                 const initialValue = 0;
@@ -124,26 +140,38 @@ const Fees = ({ userInput, subtotalInput, setSubtotal }) => {
               />
             </div>
           </div>
-          <div className="grandTotalDiv">
-            <label htmlFor="grandTotalInput">Grand Total</label>
+          <div className="taxDiv">
+            <label htmlFor="taxInput">Tax</label>
             <div className="inputField">
               <span>$</span>
               <input
                 type="number"
-                name="grandTotalInput"
-                onChange={handleGrandTotal}
-                value={grandTotalInput}
+                inputMode="numeric"
+                name="taxInput"
+                onChange={handleTax}
+                value={taxInput}
               />
             </div>
           </div>
+          <div className="tipDiv">
+            <label htmlFor="tipInput">Tip</label>
+            <div className="inputField">
+              <span>$</span>
+              <input
+                type="number"
+                inputMode="numeric"
+                name="tipInput"
+                onChange={handleTip}
+                value={tipInput}
+              />
+            </div>
+          </div>
+          <div className="grandTotalDiv">
+            <p>Grand Total: {grandTotalInput}</p>
+          </div>
         </form>
-        <button
-          className="calculateButton"
-          onClick={(e) =>
-            calculateBill(e, serviceFeeInput, deliveryFeeInput, grandTotalInput)
-          }
-        >
-          Calculate
+        <button className="calculateButton" onClick={clearButton}>
+          Clear
         </button>
       </div>
     </section>

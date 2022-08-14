@@ -1,6 +1,6 @@
-import firebase from "./firebase";
 import Header from "./Header";
 import MainContainer from "./MainContainer";
+import Footer from "./Footer";
 import "./App.css";
 
 function App() {
@@ -8,6 +8,7 @@ function App() {
     <div className="App">
       <Header />
       <MainContainer />
+      <Footer />
     </div>
   );
 }

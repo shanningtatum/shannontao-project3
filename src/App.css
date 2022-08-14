@@ -22,19 +22,23 @@ html{
   position: relative;
 }
 
-main::before{
+main{
+  border:2px blue solid;
+  height:92vh;
+}
+
+/* main::before{
   content:'';
   position: absolute;
-  top:8vh;
+  top:0;
   right:0;
   bottom:0;
   left:0;
-  width:100vw;
-  height:90vh;
+  height:100vh;
   background-image:url('./assets/vecteezy_fast-food-doodle-hand-drawn-set_6050745.jpg');
   background-position:center;
   opacity:0.1;
-}
+} */
 
 /* CSS HERE */
 
@@ -42,7 +46,8 @@ header{
   position: relative;
   text-align: center;
   background-color:white;
-  border:2px white solid;
+  border:2px red solid;
+  height:5vh;
   z-index:10;
   width:100%;
 }
@@ -71,6 +76,8 @@ input::placeholder{
   font-family:'Poppins',sans-serif;
 }
 .inputField{
+  display:flex;
+  align-items: center;
   background-color:white;
   border:1px solid grey;
   border-radius:10px;
@@ -127,6 +134,10 @@ input::-webkit-inner-spin-button {
   padding-bottom:10px;
 }
 
+.addPayee{
+  border:2px green solid;
+}
+
 .actionButton{
   display:flex;
   justify-content:space-evenly;
@@ -160,6 +171,10 @@ fieldset{
 
 .addItem form{
   padding: 10px;
+}
+
+.addItem{
+  border:2px red solid;
 }
 
 /* ADD BUTTONS */
@@ -232,22 +247,26 @@ fieldset{
 
 /* EXTRA FEES */
 
+.extraFees{
+  border:2px peachpuff solid;
+}
+
 .extraFees form{
   display:flex;
   flex-direction:column;
 }
 
-.subtotalDiv, .serviceFeeDiv, .deliveryFeeDiv, .grandTotalDiv{
+.subtotalDiv, .serviceFeeDiv, .deliveryFeeDiv, .taxDiv, .tipDiv, .grandTotalDiv{
   display:flex;
   align-items:center;
 }
 
-.serviceFeeDiv label, .deliveryFeeDiv label , .grandTotalDiv label{
+.serviceFeeDiv label, .deliveryFeeDiv label , .taxDiv label, .tipDiv label, .grandTotalDiv label{
   width:150px;
   text-align-last: left;
 }
 
-.serviceFeeDiv input, .deliveryFeeDiv input , .grandTotalDiv input{
+.serviceFeeDiv input, .deliveryFeeDiv input , .taxDiv input, .tipDiv input, .grandTotalDiv input{
   width:200px;
 }
 
@@ -265,3 +284,13 @@ fieldset{
   background-color:forestgreen;
 }
 
+/* footer */
+
+footer{
+  height:3vh;
+  padding:10px;
+  color:white;
+  background-color:rgba(0,0,0,0.8);
+  z-index:10;
+  text-align: center;
+}
