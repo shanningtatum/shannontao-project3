@@ -134,8 +134,7 @@ const MenuItem = ({ userInput }) => {
               <FontAwesomeIcon icon={faPlus} className="addIcon" />
             </button>
           </li>
-          {userInput.map((userOrder, findex) => {
-            console.log(findex);
+          {userInput.map((userOrder) => {
             // ONLY runs these lines of code if there is a userOrder associated with the person
             if (userOrder.userInfo.name.order) {
               const parentNodeKey = userOrder.userInfo.key;

@@ -29,7 +29,7 @@ const Payee = ({ userInput, setUserInput }) => {
 
       setUserInput(newState);
     });
-  }, [payeeName]);
+  }, [userInput]);
 
   // add popups
   const addPayeeHandle = () => {
