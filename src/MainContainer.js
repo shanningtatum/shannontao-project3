@@ -10,18 +10,25 @@ const MainContainer = () => {
   const [userInput, setUserInput] = useState([]);
   const [splitFees, setSplitFees] = useState("");
   const [taxRate, setTaxRate] = useState("");
+  const [splitTipAmount, setSplitTipAmount] = useState("");
 
   return (
     <main id="mainContent">
       <Payee userInput={userInput} setUserInput={setUserInput} />
       <MenuItem userInput={userInput} />
+      <Display
+        userInput={userInput}
+        splitFees={splitFees}
+        taxRate={taxRate}
+        splitTipAmount={splitTipAmount}
+      />
       <Fees
         userInput={userInput}
         setSplitFees={setSplitFees}
         taxRate={taxRate}
         setTaxRate={setTaxRate}
+        setSplitTipAmount={setSplitTipAmount}
       />
-      <Display userInput={userInput} splitFees={splitFees} taxRate={taxRate} />
     </main>
   );
 };

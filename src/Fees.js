@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Fees = ({ userInput, setSplitFees, taxRate, setTaxRate }) => {
+const Fees = ({ userInput, setSplitFees, setTaxRate, setSplitTipAmount }) => {
   // set up states for the different inputs
   const [serviceFeeInput, setServiceFee] = useState("");
   const [deliveryFeeInput, setDeliveryFee] = useState("");
@@ -37,7 +37,6 @@ const Fees = ({ userInput, setSplitFees, taxRate, setTaxRate }) => {
   // get the handle change for grand total
 
   const calculateBill = (serviceFee, deliveryFee, taxInput, tipInput) => {
-    // e.preventDefault();
     setGrandTotal("");
 
     setGrandTotal(
@@ -62,35 +61,33 @@ const Fees = ({ userInput, setSplitFees, taxRate, setTaxRate }) => {
 
     // calculate how much service fee is per person
     const splitService = serviceFee / userInput.length;
-    // console.log(`service:${splitService}`);
     console.log(serviceFee);
 
     // calculates how much the delivery fee is per person
     const splitDelivery = deliveryFee / userInput.length;
-    // console.log(`delivery:${splitDelivery}`);
 
     const splitTip = tipInput / userInput.length;
-    // console.log(`tip:${splitTip}`);
 
-    // TAX RATE :
+    // adds the split delivery fee and the split service fee
+    const totalSplit = splitService + splitDelivery;
+
+    // store it in state variable so I can use it in the Display.js
+    setSplitFees(totalSplit);
+
+    // TAX RATE CALCULATIONS:
 
     const taxPercentage =
       taxInput / (+orderSubtotal + +serviceFee + +deliveryFee);
 
     console.log(taxPercentage);
 
-    setTaxRate(taxPercentage);
+    setSplitTipAmount(splitTip);
 
-    // tax amount / subtotal + service fee + delivery fee
-
-    const totalSplit = splitService + splitDelivery;
-
-    setSplitFees(totalSplit);
-
-    // console.log(`toptal split ${totalSplit}`);
+    setTaxRate(taxPercentage + 1);
   };
 
   const clearButton = () => {
+    // clears all the input fields
     setServiceFee("");
     setDeliveryFee("");
     setTax("");

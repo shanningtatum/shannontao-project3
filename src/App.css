@@ -24,7 +24,6 @@ html{
 
 main{
   border:2px blue solid;
-  height:92vh;
 }
 
 /* main::before{
@@ -288,7 +287,6 @@ fieldset{
 /* footer */
 
 footer{
-  height:3vh;
   padding:10px;
   color:white;
   background-color:rgba(0,0,0,0.8);

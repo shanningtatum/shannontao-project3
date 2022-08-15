@@ -1,4 +1,6 @@
-function Display({ userInput, splitFees, taxRate }) {
+import { useEffect } from "react";
+
+function Display({ userInput, splitFees, taxRate, splitTipAmount }) {
   return (
     <section className="displaySection">
       <h2>Owed</h2>
@@ -10,22 +12,22 @@ function Display({ userInput, splitFees, taxRate }) {
             const newArray = [];
             const priceArray = [];
 
+            // creates a new array to map over for the orders
             for (let key in orderArray) {
               newArray.push(orderArray[key]);
+              // creates a new price array to reduce and get price Sum
               priceArray.push(parseFloat(orderArray[key].itemPrice));
             }
 
+            // adds all the value of the person's order together to get the TOTAL sum of what they ordered
             const priceSum = priceArray.reduce((previous, current) => {
               return previous + current;
             }, 0);
 
-            // console.log(`price sum ${priceSum}`);
-
+            // adds the total cost of the person's order with the service fee + delivery fee split
             const feeAndPriceSum = +priceSum + +splitFees;
 
-            console.log(splitFees);
-
-            console.log(`fee and price ${feeAndPriceSum}`);
+            console.log(priceSum);
 
             return (
               <li className="payeeList">
@@ -38,7 +40,13 @@ function Display({ userInput, splitFees, taxRate }) {
                     </>
                   );
                 })}
-                <p>Total: $ {feeAndPriceSum + feeAndPriceSum * taxRate}</p>
+                <p>
+                  Total: $
+                  {(
+                    (priceSum + +splitFees) * taxRate +
+                    +splitTipAmount
+                  ).toFixed(2)}
+                </p>
               </li>
             );
           })}
