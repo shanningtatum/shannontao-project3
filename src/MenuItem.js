@@ -113,7 +113,10 @@ const MenuItem = ({ userInput }) => {
               </option>
               {userInput.map((username) => {
                 return (
-                  <option value={username.userInfo.key}>
+                  <option
+                    value={username.userInfo.key}
+                    key={username.userInfo.key}
+                  >
                     {username.userInfo.name.name}
                   </option>
                 );
@@ -158,9 +161,9 @@ const MenuItem = ({ userInput }) => {
                 newOrders.push(orderKey);
               }
 
-              return newOrders.map((orders, index) => {
+              return newOrders.map((orders) => {
                 return (
-                  <li className={`payeeBox ${index}`}>
+                  <li className="payeeBox" key={orders.key}>
                     <p>{orders.itemName}</p>
                     <p>{orders.itemPrice}</p>
                     <button

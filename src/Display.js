@@ -4,7 +4,12 @@ function Display({ userInput, splitFees, taxRate, splitTipAmount }) {
       <div className="wrapper">
         <h2>Owed</h2>
         <div className="renderPayees">
-          <ul>
+          <table>
+            <tr>
+              <th>Payee</th>
+              <th>Item Ordered</th>
+              <th>Total Owed</th>
+            </tr>
             {userInput.map((payee) => {
               // console.log(payee.userInfo.name.name);
               const orderArray = payee.userInfo.name.order;
@@ -16,6 +21,8 @@ function Display({ userInput, splitFees, taxRate, splitTipAmount }) {
                 newArray.push(orderArray[key]);
                 // creates a new price array to reduce and get price Sum
                 priceArray.push(parseFloat(orderArray[key].itemPrice));
+
+                console.log(newArray);
               }
 
               // adds all the value of the person's order together to get the TOTAL sum of what they ordered
@@ -24,32 +31,36 @@ function Display({ userInput, splitFees, taxRate, splitTipAmount }) {
               }, 0);
 
               // adds the total cost of the person's order with the service fee + delivery fee split
-              const feeAndPriceSum = +priceSum + +splitFees;
-
-              console.log(priceSum);
 
               return (
-                <li className="payeeList">
-                  <p>{payee.userInfo.name.name}</p>
+                <tr key={payee.key}>
+                  {console.log(payee.key)}
+                  <th>{payee.userInfo.name.name}</th>
                   {newArray.map((item) => {
+                    console.log("item");
+                    console.log(item);
                     return (
                       <>
-                        <p>{item.itemName}</p>
-                        <p>$ {item.itemPrice}</p>
+                        <tr>
+                          <td key={item.key}>{item.itemName}</td>
+                          <td>$ {item.itemPrice}</td>
+                        </tr>
                       </>
                     );
                   })}
-                  <p>
-                    Total: $
-                    {(
-                      (priceSum + +splitFees) * taxRate +
-                      +splitTipAmount
-                    ).toFixed(2)}
-                  </p>
-                </li>
+                  <td>
+                    $
+                    {splitFees
+                      ? (
+                          (priceSum + +splitFees) * taxRate +
+                          +splitTipAmount
+                        ).toFixed(2)
+                      : priceSum.toFixed(2)}
+                  </td>
+                </tr>
               );
             })}
-          </ul>
+          </table>
         </div>
       </div>
     </section>

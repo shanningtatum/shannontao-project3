@@ -22,33 +22,32 @@ html{
   position: relative;
 }
 
-main{
-  border:2px blue solid;
-}
 
-/* main::before{
+main::before{
   content:'';
   position: absolute;
   top:0;
   right:0;
-  bottom:0;
   left:0;
   height:100vh;
   background-image:url('./assets/vecteezy_fast-food-doodle-hand-drawn-set_6050745.jpg');
   background-position:center;
+  background-size:cover;
   opacity:0.1;
-} */
+}
 
 /* CSS HERE */
 
 header{
+  display:flex;
   position: relative;
   text-align: center;
   background-color:white;
-  border:2px red solid;
   height:5vh;
   z-index:10;
   width:100%;
+  justify-content: center;
+  align-items: center;
 }
 
 h1{
@@ -134,9 +133,6 @@ input::-webkit-inner-spin-button {
   padding-bottom:10px;
 }
 
-.addPayee{
-  border:2px green solid;
-}
 
 .actionButton{
   display:flex;
@@ -173,9 +169,6 @@ fieldset{
   padding: 10px;
 }
 
-.addItem{
-  border:2px red solid;
-}
 
 /* ADD BUTTONS */
 
@@ -241,15 +234,35 @@ fieldset{
   margin:0 10px 10px 0;
 }
 
-/* MENU ITEM */
+/* DISPLAY SECTION */
+
+
+
+table, th, td {
+  border: 2px solid red;
+}
+
+table{
+  border:2px red solid;
+}
+
+td{
+  width:100px;
+}
+
+th{
+  border:2px orange solid;
+}
+
 
 
 
 /* EXTRA FEES */
 
 .extraFees{
-  border:2px peachpuff solid;
+  padding:10px;
 }
+
 
 .extraFees form{
   display:flex;
@@ -287,9 +300,10 @@ fieldset{
 /* footer */
 
 footer{
+  position: relative;
   padding:10px;
   color:white;
-  background-color:rgba(0,0,0,0.8);
-  z-index:10;
+  background-color:rgb(36, 36, 36);
+  z-index:100;
   text-align: center;
 }
