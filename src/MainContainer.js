@@ -3,6 +3,7 @@ import MenuItem from "./MenuItem";
 import Fees from "./Fees";
 import Display from "./Display";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const MainContainer = () => {
   const [userInput, setUserInput] = useState([]);
@@ -13,6 +14,7 @@ const MainContainer = () => {
 
   return (
     <main id="mainContent">
+      <Link to={"/"}>Back</Link>
       <Payee userInput={userInput} setUserInput={setUserInput} />
       <MenuItem
         userInput={userInput}

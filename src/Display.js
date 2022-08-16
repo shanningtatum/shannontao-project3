@@ -8,7 +8,7 @@ function Display({
   return (
     <section className="displaySection">
       <div className="wrapper">
-        {userOrders ? <h2>Split Details</h2> : null}
+        {userOrders == "" ? null : <h2>Split Details</h2>}
         <div>
           <ul className="renderPayees">
             {userInput.map((payee) => {
