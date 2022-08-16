@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import firebase from "./firebase";
-import { getDatabase, ref, push, remove } from "firebase/database";
+import { getDatabase, ref, push, remove, onValue } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-const MenuItem = ({ userInput }) => {
+const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
   const database = getDatabase(firebase);
   // const dbRef = ref(database);
 
@@ -14,6 +14,33 @@ const MenuItem = ({ userInput }) => {
   const [itemPrice, setItemPrice] = useState([]);
   // useState item Key
   const [itemKey, setItemKey] = useState([]);
+
+  // array to store ujser orders
+  const newOrders = [];
+
+  // use effect only on update
+  useEffect(() => {
+    const dbRef = ref(database, `/${itemKey}/order`);
+
+    onValue(dbRef, () => {
+      userInput.map((people) => {
+        const orderArray = people.userInfo.name.order;
+
+        for (let key in orderArray) {
+          const newOrder = {
+            parentKey: people.userInfo.key,
+            key: key,
+            itemName: orderArray[key].itemName,
+            itemPrice: orderArray[key].itemPrice,
+          };
+
+          newOrders.push(newOrder);
+        }
+
+        setUserOrders(newOrders);
+      });
+    });
+  }, [itemName]);
 
   // triggers add item popup
   const addItemHandle = () => {
@@ -62,6 +89,7 @@ const MenuItem = ({ userInput }) => {
         itemName: itemName,
         itemPrice: itemPrice,
       };
+
       return push(dbRef, userOrder);
     } else {
       alert("Enter a value");
@@ -71,7 +99,6 @@ const MenuItem = ({ userInput }) => {
   // remove order node on handle click
   const removeItem = (parentKey, childKey) => {
     const deleteRef = ref(database, `/${parentKey}/order/${childKey}`);
-
     remove(deleteRef);
   };
 
@@ -137,16 +164,27 @@ const MenuItem = ({ userInput }) => {
               <FontAwesomeIcon icon={faPlus} className="addIcon" />
             </button>
           </li>
-          {userInput.map((userOrder) => {
+          {
+            userOrders.map((order) => {
+              const { parentKey, key, itemName, itemPrice } = order;
+              return (
+                <li className="payeeBox" key={key}>
+                  <p>{itemName}</p>
+                  <p>{itemPrice}</p>
+                  <button onClick={() => removeItem(parentKey, key)}>
+                    <FontAwesomeIcon icon={faXmark} />
+                  </button>
+                </li>
+              );
+            })
+
+            /* {userInput.map((userOrder) => {
             // ONLY runs these lines of code if there is a userOrder associated with the person
             if (userOrder.userInfo.name.order) {
               const parentNodeKey = userOrder.userInfo.key;
 
               // create a new object based on orders
               const newObj = userOrder.userInfo.name.order;
-
-              // array to store object if all needed information
-              const newOrders = [];
 
               // loop through new object to get key
               for (let key in newObj) {
@@ -160,22 +198,18 @@ const MenuItem = ({ userInput }) => {
                 // push to newOrders array so we can .map through it
                 newOrders.push(orderKey);
               }
-
-              newOrders.map((orders) => {
-                return (
-                  <li className="payeeBox" key={orders.key}>
-                    <p>{orders.itemName}</p>
-                    <p>{orders.itemPrice}</p>
-                    <button
-                      onClick={() => removeItem(orders.parentKey, orders.key)}
-                    >
-                      <FontAwesomeIcon icon={faXmark} />
-                    </button>
-                  </li>
-                );
-              });
             }
-          })}
+            return newOrders.map((orders) => {
+              return (
+                <li className="payeeBox" key={orders.key}>
+                  <p>{orders.itemName}</p>
+                  <p>{orders.itemPrice}</p>
+                  
+                </li>
+              );
+            });
+          })} */
+          }
         </ul>
       </div>
     </section>

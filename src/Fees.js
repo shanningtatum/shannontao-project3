@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-const Fees = ({ userInput, setSplitFees, setTaxRate, setSplitTipAmount }) => {
+const Fees = ({
+  userOrders,
+  userInput,
+  setSplitFees,
+  setTaxRate,
+  setSplitTipAmount,
+}) => {
   // set up states for the different inputs
   const [serviceFeeInput, setServiceFee] = useState("");
   const [deliveryFeeInput, setDeliveryFee] = useState("");
@@ -102,28 +108,47 @@ const Fees = ({ userInput, setSplitFees, setTaxRate, setSplitTipAmount }) => {
         <form action="">
           <div className="subtotalDiv">
             <p>Subtotal:&nbsp;</p>
-            {userInput.map((orderTotal) => {
-              const priceArray = orderTotal.userInfo.name.order;
+            {
+              userOrders.map((order) => {
+                orderValues.push(order.itemPrice);
+                console.log(orderValues);
 
-              // checks if this variable exists, if it does, run the following code
-              if (orderTotal.userInfo.name.order) {
-                for (let key in priceArray) {
-                  const priceOfItem = priceArray[key].itemPrice;
-                  orderValues.push(parseFloat(priceOfItem));
+                if (order.itemPrice) {
+                  const initialValue = 0;
+                  const sumOfOrders = orderValues.reduce(
+                    (previousValue, currentValue) =>
+                      +previousValue + +currentValue,
+                    initialValue
+                  );
+
+                  orderSubtotal = sumOfOrders;
                 }
+                return orderSubtotal;
+              })
+              // userInput.map((orderTotal) => {
+              //   const priceArray = orderTotal.userInfo.name.order;
 
-                const initialValue = 0;
-                const sumOfOrders = orderValues.reduce(
-                  (previousValue, currentValue) => previousValue + currentValue,
-                  initialValue
-                );
+              //   // checks if this variable exists, if it does, run the following code
+              //   if (orderTotal.userInfo.name.order) {
+              //     for (let key in priceArray) {
+              //       const priceOfItem = priceArray[key].itemPrice;
+              //       orderValues.push(parseFloat(priceOfItem));
+              //     }
 
-                orderSubtotal = sumOfOrders;
-              }
-              return <p>$ {orderSubtotal}</p>;
+              //     const initialValue = 0;
+              //     const sumOfOrders = orderValues.reduce(
+              //       (previousValue, currentValue) => previousValue + currentValue,
+              //       initialValue
+              //     );
 
-              // if it doesn't exist, don't do anything
-            })}
+              //     orderSubtotal = sumOfOrders;
+              //   }
+              //   return <p>$ {orderSubtotal}</p>;
+
+              //   // if it doesn't exist, don't do anything
+              // })
+            }
+            <p>$ {orderSubtotal}</p>
           </div>
           <div className="serviceFeeDiv">
             <label htmlFor="serviceFeeInput">Service Fee</label>
