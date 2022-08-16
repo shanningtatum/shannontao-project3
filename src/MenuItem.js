@@ -161,8 +161,8 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
             </select>
           </fieldset>
           <div className="actionButton">
-            <button onClick={closeItemButton}>Cancel</button>
             <button onClick={storeItemName}>Submit</button>
+            <button onClick={closeItemButton}>Cancel</button>
           </div>
         </form>
       </div>

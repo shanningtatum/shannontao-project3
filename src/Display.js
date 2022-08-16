@@ -8,7 +8,7 @@ function Display({
   return (
     <section className="displaySection">
       <div className="wrapper">
-        {userOrders == "" ? null : <h2>Split Details</h2>}
+        {userOrders === "" ? <h2>Split Details</h2> : null}
         <div>
           <ul className="renderPayees">
             {userInput.map((payee) => {
@@ -33,10 +33,6 @@ function Display({
               const priceSum = priceArray.reduce((previous, current) => {
                 return previous + current;
               }, 0);
-
-              console.log(splitFees);
-
-              // adds the total cost of the person's order with the service fee + delivery fee split
 
               return newArray.map((item) => {
                 const { name, orderKey } = item;

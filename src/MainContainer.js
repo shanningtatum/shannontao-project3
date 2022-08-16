@@ -4,8 +4,11 @@ import Fees from "./Fees";
 import Display from "./Display";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { DarkModeContext } from "./DarkModeContext";
 
 const MainContainer = () => {
+  const { darkMode } = useContext(DarkModeContext);
   const [userInput, setUserInput] = useState([]);
   const [userOrders, setUserOrders] = useState([]);
   const [splitFees, setSplitFees] = useState("");
@@ -13,8 +16,13 @@ const MainContainer = () => {
   const [splitTipAmount, setSplitTipAmount] = useState("");
 
   return (
-    <main id="mainContent">
-      <Link to={"/"}>Back</Link>
+    <main
+      id="mainContent"
+      className={darkMode ? "darkDisplay" : "lightDisplay"}
+    >
+      <Link to={"/"}>
+        <div className="wrapper">Back</div>
+      </Link>
       <Payee userInput={userInput} setUserInput={setUserInput} />
       <MenuItem
         userInput={userInput}

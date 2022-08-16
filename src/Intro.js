@@ -1,9 +1,18 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { DarkModeContext } from "./DarkModeContext";
 
 function Intro() {
+  const { darkMode } = useContext(DarkModeContext);
   return (
-    <div className="introSection">
-      <div className="wrapper">
+    <div
+      className={
+        darkMode ? "introSection darkDisplay" : "introSection lightDisplay"
+      }
+    >
+      <div
+        className={darkMode ? "wrapper darkDisplay" : "wrapper lightDisplay"}
+      >
         <h2>
           Welcome to Duber<span className="strongFont">Eats</span> Bill
           Splitter!
