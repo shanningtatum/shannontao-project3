@@ -26,7 +26,6 @@ const Payee = ({ userInput, setUserInput }) => {
         };
         newState.push({ key: key, userInfo });
       }
-
       setUserInput(newState);
     });
   }, [payeeName]);

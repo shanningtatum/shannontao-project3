@@ -120,10 +120,10 @@ const Fees = ({ userInput, setSplitFees, setTaxRate, setSplitTipAmount }) => {
 
                 orderSubtotal = sumOfOrders;
               }
+              return <p>$ {orderSubtotal}</p>;
 
               // if it doesn't exist, don't do anything
             })}
-            <p>$ {orderSubtotal}</p>
           </div>
           <div className="serviceFeeDiv">
             <label htmlFor="serviceFeeInput">Service Fee</label>
