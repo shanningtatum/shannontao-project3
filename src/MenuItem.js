@@ -21,9 +21,9 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
 
   // use effect only on update
   useEffect(() => {
-    const dbRef = ref(database, `/${itemKey}/order`);
+    const orderRef = ref(database, `/${itemKey}/order`);
 
-    onValue(dbRef, () => {
+    onValue(orderRef, () => {
       const newOrders = [];
 
       userInput.map((people) => {
@@ -41,9 +41,11 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
         }
 
         setUserOrders(newOrders);
+
+        return null;
       });
     });
-  }, [itemName]);
+  }, [itemName, setUserOrders, userInput, itemKey, database]);
 
   // triggers add item popup
   const addItemHandle = () => {
@@ -75,6 +77,7 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
   // read options value
   const readOptions = (e) => {
     e.preventDefault();
+    // this reads the value based on the drop down (parentKey node)
     setItemKey(e.target.value);
   };
 
