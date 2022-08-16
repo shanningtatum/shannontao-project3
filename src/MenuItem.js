@@ -161,7 +161,7 @@ const MenuItem = ({ userInput }) => {
                 newOrders.push(orderKey);
               }
 
-              return newOrders.map((orders) => {
+              newOrders.map((orders) => {
                 return (
                   <li className="payeeBox" key={orders.key}>
                     <p>{orders.itemName}</p>
