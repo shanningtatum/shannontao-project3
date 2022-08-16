@@ -28,7 +28,7 @@ const Payee = ({ userInput, setUserInput }) => {
       }
       setUserInput(newState);
     });
-  }, [payeeName]);
+  }, [payeeName, setUserInput]);
 
   // add popups
   const addPayeeHandle = () => {
