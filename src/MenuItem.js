@@ -18,13 +18,14 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
   // keep track of updates
 
   // array to store ujser orders
-  const newOrders = [];
 
   // use effect only on update
   useEffect(() => {
     const dbRef = ref(database, `/${itemKey}/order`);
 
     onValue(dbRef, () => {
+      const newOrders = [];
+
       userInput.map((people) => {
         const orderArray = people.userInfo.name.order;
 
