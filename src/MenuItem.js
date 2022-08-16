@@ -15,6 +15,8 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
   // useState item Key
   const [itemKey, setItemKey] = useState([]);
 
+  // keep track of updates
+
   // array to store ujser orders
   const newOrders = [];
 

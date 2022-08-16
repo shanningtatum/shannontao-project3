@@ -123,7 +123,7 @@ const Fees = ({
 
                   orderSubtotal = sumOfOrders;
                 }
-                return orderSubtotal;
+                return null;
               })
               // userInput.map((orderTotal) => {
               //   const priceArray = orderTotal.userInfo.name.order;
