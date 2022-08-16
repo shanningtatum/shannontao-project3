@@ -21,30 +21,25 @@ const Fees = ({
   // get the handle change for service fee
   const handleServiceFee = (e) => {
     setServiceFee(e.target.value);
-    calculateBill(serviceFeeInput, deliveryFeeInput, taxInput, tipInput);
   };
 
   // get the handle change for delivery fee
   const handleDeliveryFee = (e) => {
     setDeliveryFee(e.target.value);
-    calculateBill(serviceFeeInput, deliveryFeeInput, taxInput, tipInput);
   };
 
   const handleTax = (e) => {
     setTax(e.target.value);
-    calculateBill(serviceFeeInput, deliveryFeeInput, taxInput, tipInput);
   };
 
   const handleTip = (e) => {
     setTip(e.target.value);
-    calculateBill(serviceFeeInput, deliveryFeeInput, taxInput, tipInput);
   };
 
   // get the handle change for grand total
 
   const calculateBill = (serviceFee, deliveryFee, taxInput, tipInput) => {
-    setGrandTotal("");
-
+    console.log(serviceFee, deliveryFee, taxInput, tipInput);
     setGrandTotal(
       (
         +orderSubtotal +
@@ -67,7 +62,6 @@ const Fees = ({
 
     // calculate how much service fee is per person
     const splitService = serviceFee / userInput.length;
-    console.log(serviceFee);
 
     // calculates how much the delivery fee is per person
     const splitDelivery = deliveryFee / userInput.length;
@@ -84,8 +78,6 @@ const Fees = ({
 
     const taxPercentage =
       taxInput / (+orderSubtotal + +serviceFee + +deliveryFee);
-
-    console.log(taxPercentage);
 
     setSplitTipAmount(splitTip);
 
@@ -108,46 +100,21 @@ const Fees = ({
         <form action="">
           <div className="subtotalDiv">
             <p>Subtotal:&nbsp;</p>
-            {
-              userOrders.map((order) => {
-                orderValues.push(order.itemPrice);
-                console.log(orderValues);
+            {userOrders.map((order) => {
+              orderValues.push(order.itemPrice);
 
-                if (order.itemPrice) {
-                  const initialValue = 0;
-                  const sumOfOrders = orderValues.reduce(
-                    (previousValue, currentValue) =>
-                      +previousValue + +currentValue,
-                    initialValue
-                  );
+              if (order.itemPrice) {
+                const initialValue = 0;
+                const sumOfOrders = orderValues.reduce(
+                  (previousValue, currentValue) =>
+                    +previousValue + +currentValue,
+                  initialValue
+                );
 
-                  orderSubtotal = sumOfOrders;
-                }
-                return null;
-              })
-              // userInput.map((orderTotal) => {
-              //   const priceArray = orderTotal.userInfo.name.order;
-
-              //   // checks if this variable exists, if it does, run the following code
-              //   if (orderTotal.userInfo.name.order) {
-              //     for (let key in priceArray) {
-              //       const priceOfItem = priceArray[key].itemPrice;
-              //       orderValues.push(parseFloat(priceOfItem));
-              //     }
-
-              //     const initialValue = 0;
-              //     const sumOfOrders = orderValues.reduce(
-              //       (previousValue, currentValue) => previousValue + currentValue,
-              //       initialValue
-              //     );
-
-              //     orderSubtotal = sumOfOrders;
-              //   }
-              //   return <p>$ {orderSubtotal}</p>;
-
-              //   // if it doesn't exist, don't do anything
-              // })
-            }
+                orderSubtotal = sumOfOrders;
+              }
+              return null;
+            })}
             <p>$ {orderSubtotal}</p>
           </div>
           <div className="serviceFeeDiv">
@@ -206,8 +173,13 @@ const Fees = ({
             <p>Grand Total: {grandTotalInput}</p>
           </div>
         </form>
-        <button className="calculateButton" onClick={clearButton}>
-          Clear
+        <button
+          className="calculateButton"
+          onClick={() =>
+            calculateBill(serviceFeeInput, deliveryFeeInput, taxInput, tipInput)
+          }
+        >
+          Calculate
         </button>
       </div>
     </section>

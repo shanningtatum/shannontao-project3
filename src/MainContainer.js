@@ -3,8 +3,6 @@ import MenuItem from "./MenuItem";
 import Fees from "./Fees";
 import Display from "./Display";
 import { useState } from "react";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const MainContainer = () => {
   const [userInput, setUserInput] = useState([]);
@@ -25,6 +23,7 @@ const MainContainer = () => {
         userInput={userInput}
         splitFees={splitFees}
         taxRate={taxRate}
+        userOrders={userOrders}
         splitTipAmount={splitTipAmount}
       />
       <Fees
@@ -35,6 +34,8 @@ const MainContainer = () => {
         setTaxRate={setTaxRate}
         setSplitTipAmount={setSplitTipAmount}
       />
+
+      {/* REACT ROUTES */}
     </main>
   );
 };

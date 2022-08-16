@@ -76,6 +76,8 @@ const Payee = ({ userInput, setUserInput }) => {
           <input
             type="text"
             name="payeeName"
+            minLength="1"
+            maxLength="20"
             placeholder="ex: Shannon"
             onChange={handlePayeeChange}
           />
@@ -99,7 +101,6 @@ const Payee = ({ userInput, setUserInput }) => {
           {
             // RENDER PAYEE LIST
             userInput.map((userObj, index) => {
-              // console.log(userInput);
               return (
                 <li className={`payeeBox ${index}`} key={index}>
                   <p>{userObj.userInfo.name.name}</p>

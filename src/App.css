@@ -12,6 +12,7 @@ html{
   --green:#0cc46a;
   --delete:#F38375;
   --delete-hover:#EF6351;
+  --input-bg:#dbdbdb;
   font-family:'Poppins',sans-serif;
 }
 
@@ -76,8 +77,7 @@ input::placeholder{
 .inputField{
   display:flex;
   align-items: center;
-  background-color:white;
-  border:1px solid grey;
+  background-color:var(--input-bg);
   border-radius:10px;
 }
 .inputField input{
@@ -99,6 +99,28 @@ input::-webkit-inner-spin-button {
 .inputField span{
   padding:0 10px;
   color:rgba(0,0,0,0.5);
+}
+
+/* INTRO SECTION */
+
+.introSection{
+  padding:10px;
+  background-color:white;
+  height:92vh;
+}
+
+.navigateButton{
+  background-color:#0cc46a;
+  color:white;
+  text-decoration:none;
+  padding:5px 10px;
+  border:2px var(--green) solid;
+  transition: 0.3s all;
+}
+
+.navigateButton:hover, .navigateButton:focus{
+  background-color:white;
+  color:black;
 }
 /* POPUP BOXES */
 
@@ -191,12 +213,14 @@ fieldset{
   flex-direction:column;
   justify-content: center;
   align-items: center;
-  width:100px;
+  max-width:max-content;
+  min-width:100px;
   height:100px;
   border-radius:10px;
   background-color:lightblue;
   /* text-align: center; */
   position: relative;
+  word-wrap:break-word;  
 }
 .payeeBox p {
   margin:0;
@@ -220,7 +244,8 @@ fieldset{
   background-color:crimson;
 }
 
-.payeeList, .orderList{
+/* render list */
+.payeeList, .orderList, .renderPayees{
   list-style:none;
   padding:0;
   display:flex;
@@ -230,39 +255,26 @@ fieldset{
   /* justify-content:space-evenly; */
 }
 
-.payeeList li, .orderList li {
+.payeeList li, .orderList li, .renderPayees li {
   margin:0 10px 10px 0;
 }
-
-/* DISPLAY SECTION */
-
-
-
-table, th, td {
-  border: 2px solid red;
-}
-
-table{
-  border:2px red solid;
-}
-
-td{
-  width:100px;
-}
-
-th{
-  border:2px orange solid;
-}
-
-
 
 
 /* EXTRA FEES */
 
 .extraFees{
-  padding:10px;
+  margin-bottom:20px;
 }
 
+.extraFees h2{
+  margin:0;
+}
+
+.extraFees .wrapper{
+  position: relative;
+  padding:10px;
+  border-radius:10px;
+}
 
 .extraFees form{
   display:flex;
@@ -272,6 +284,7 @@ th{
 .subtotalDiv, .serviceFeeDiv, .deliveryFeeDiv, .taxDiv, .tipDiv, .grandTotalDiv{
   display:flex;
   align-items:center;
+  margin-bottom:20px;
 }
 
 .serviceFeeDiv label, .deliveryFeeDiv label , .taxDiv label, .tipDiv label, .grandTotalDiv label{
@@ -281,6 +294,7 @@ th{
 
 .serviceFeeDiv input, .deliveryFeeDiv input , .taxDiv input, .tipDiv input, .grandTotalDiv input{
   width:200px;
+  background-color:var(--input-bg);
 }
 
 .calculateButton{

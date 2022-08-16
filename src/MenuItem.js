@@ -33,6 +33,7 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
           const newOrder = {
             parentKey: people.userInfo.key,
             key: key,
+            name: people.userInfo.name,
             itemName: orderArray[key].itemName,
             itemPrice: orderArray[key].itemPrice,
           };
@@ -77,7 +78,7 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
   // read options value
   const readOptions = (e) => {
     e.preventDefault();
-    // this reads the value based on the drop down (parentKey node)
+    // this reads the value based on the drop down (parentKey)
     setItemKey(e.target.value);
   };
 
@@ -117,18 +118,21 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
             <input
               type="text"
               name="itemName"
+              maxLength="20"
               onChange={handleItemChange}
               value={itemName}
-              placeholder="Ex: Chicken Tenders"
+              placeholder="Ex: Pho"
               required
             />
             <label htmlFor="itemPrice">Item Price</label>
             <input
               type="number"
               name="itemPrice"
+              min="0"
+              max="999"
               onChange={handlePriceChange}
               value={itemPrice}
-              placeholder="Ex: 4.99"
+              placeholder="Ex: 12.99"
               required
             />
           </fieldset>
@@ -171,12 +175,14 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
             </button>
           </li>
           {
-            userOrders.map((order) => {
+            userOrders.map((order, index) => {
               const { parentKey, key, itemName, itemPrice } = order;
+
               return (
-                <li className="payeeBox" key={key}>
+                <li className={`payeeBox ${order.name.name}`} key={key}>
                   <p>{itemName}</p>
-                  <p>{itemPrice}</p>
+                  <p>${itemPrice}</p>
+                  <p className="payeeName">{order.name.name}</p>
                   <button onClick={() => removeItem(parentKey, key)}>
                     <FontAwesomeIcon icon={faXmark} />
                   </button>
