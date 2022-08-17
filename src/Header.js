@@ -15,7 +15,6 @@ const Header = () => {
             {!darkMode ? "Toggle Dark Mode" : "Toggle Light Mode"}
           </span>
           {!darkMode ? "🌛" : "🌞"}
-
           <span
             className={
               darkMode ? "toolTipText lightDisplay" : "toolTipText darkDisplay"

@@ -119,11 +119,11 @@ const Payee = ({ userInput, setUserInput }) => {
               onClick={addPayeeHandle}
             >
               <FontAwesomeIcon icon={faPlus} className="addIcon " />
-              <span className="sr-only">Add Payee</span>
+              <span className="sr-only">Add Payer</span>
             </button>
           </li>
           {
-            // RENDER PAYEE LIST
+            // RENDER PAYER LIST
             userInput.map((userObj, index) => {
               return (
                 <li
@@ -133,17 +133,19 @@ const Payee = ({ userInput, setUserInput }) => {
                   key={index}
                 >
                   <p>{userObj.userInfo.name}</p>
-                  <button
-                    className={
-                      darkMode ? "deleteButton darkDisplay" : "deleteButton"
-                    }
-                    onClick={() => deletePayee(userObj.key)}
-                  >
-                    <FontAwesomeIcon icon={faXmark} />
-                    <span className="sr-only">
-                      Delete {userObj.userInfo.name} from Payee List
-                    </span>
-                  </button>
+                  <div className="deleteButtonDiv">
+                    <button
+                      className={
+                        darkMode ? "deleteButton darkDisplay" : "deleteButton"
+                      }
+                      onClick={() => deletePayee(userObj.key)}
+                    >
+                      <FontAwesomeIcon icon={faXmark} />
+                      <span className="sr-only">
+                        Delete {userObj.userInfo.name} from Payer List
+                      </span>
+                    </button>
+                  </div>
                 </li>
               );
             })

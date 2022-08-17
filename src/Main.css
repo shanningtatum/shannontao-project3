@@ -1,0 +1,336 @@
+/* INTRO SECTION */
+
+/* back button */
+
+.returnToButton p {
+  margin: 0 20px;
+  font-size: clamp(0.7rem, 4vw, 0.8rem);
+}
+
+.returnToButton {
+  width: 200px;
+  margin: 0 40px;
+}
+
+.returnToLink {
+  color: black;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: color 0.3s;
+  background-color: white;
+}
+
+.returnToLink.darkDisplay {
+  color: white;
+  background-color: var(--dark-bg);
+}
+
+.returnToLink:hover {
+  color: var(--green);
+}
+
+.introSection {
+  padding: 10px;
+  height: 92vh;
+}
+
+.introSection h2 {
+  text-align: center;
+}
+.introSection .wrapper {
+  border-radius: 20px;
+  padding: 20px 40px 40px;
+  margin-top: 50px;
+}
+
+.introSection ul {
+  font-size: clamp(0.9rem, 4vw, 1rem);
+}
+
+.callToAction {
+  text-align: center;
+}
+.navigateButton {
+  width: 200px;
+  margin: 0 auto;
+  background-color: #0cc46a;
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+  border: 2px var(--green) solid;
+  transition: 0.3s all;
+}
+
+.navigateButton:hover,
+.navigateButton:focus {
+  background-color: white;
+  color: black;
+}
+
+/* POPUP BOXES */
+
+.popup {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  width: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  display: none;
+  z-index: 10;
+}
+
+.popup.active {
+  display: flex;
+  margin: 0 auto;
+}
+
+.popup form {
+  background-color: rgba(100, 100, 120);
+  border-radius: 10px;
+  padding: 20px 40px;
+  height: max-content;
+  margin: auto;
+  width: 300px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.addPayeePopup label {
+  padding-bottom: 10px;
+}
+
+.actionButton {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 10px;
+}
+
+.actionButton button {
+  font-family: "Poppins", sans-serif;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  transition: 0.3s all;
+}
+
+.actionButton button:hover,
+.actionButton button:focus {
+  background-color: grey;
+  color: white;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+}
+
+.addItemPopup label {
+  padding: 10px;
+}
+
+/* MAIN */
+
+main {
+  background-image: url(./assets/lightmode.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+main.darkDisplay {
+  background-image: url(./assets/darkmode.png);
+}
+
+/* ADD ITEM POP UP */
+.addItemPopup fieldset {
+  display: flex;
+  flex-direction: column;
+}
+
+.addItemPopup input {
+  width: 100%;
+}
+
+.addItemPopup label {
+  text-align-last: left;
+}
+
+.addItem form {
+  padding: 10px;
+}
+
+/* ADD BUTTONS */
+
+.addButton {
+  width: 100px;
+  height: 100px;
+  border: none;
+  border-radius: 10px;
+  transition: 0.3s all;
+}
+
+.addIcon {
+  cursor: pointer;
+  font-size: 60px;
+  color: grey;
+  transition: 0.3s all;
+}
+
+.addButton:hover,
+.addButton:focus,
+.addButton:hover .addIcon,
+.addButton:focus .addIcon {
+  background-color: var(--green);
+  color: black;
+}
+
+/* ADD PAYEE SECTION */
+
+.payeeBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: max-content;
+  min-width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  background-color: lightblue;
+  position: relative;
+  word-wrap: break-word;
+}
+
+.payeeBox.darkDisplay {
+  background-color: #40647a;
+}
+.payeeBox p {
+  margin: 0;
+}
+
+/* DELETE ICON */
+.deleteButtonDiv {
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  background-color: var(--delete);
+  position: absolute;
+  top: -5px;
+  right: -5px;
+
+  transition: 0.3s;
+}
+.deleteButton {
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.deleteButtonDiv:hover,
+.deleteButtonDiv:focus {
+  background-color: crimson;
+}
+
+.deleteButtonDiv.darkDisplay {
+  background-color: crimson;
+}
+
+.deleteButtonDiv.darkDisplay:hover,
+.deleteButtonDiv.darkDisplay:focus {
+  background-color: maroon;
+}
+
+/* render list */
+.payeeList,
+.orderList,
+.renderPayees {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.payeeList li,
+.orderList li,
+.renderPayees li {
+  margin: 0 10px 10px 0;
+}
+
+/* EXTRA FEES */
+
+.extraFees {
+  padding-bottom: 20px;
+}
+
+.extraFees h2 {
+  margin: 0;
+}
+
+.extraFees .wrapper {
+  position: relative;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.extraFees form {
+  display: flex;
+  flex-direction: column;
+}
+
+.subtotalDiv,
+.serviceFeeDiv,
+.deliveryFeeDiv,
+.taxDiv,
+.tipDiv,
+.grandTotalDiv {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.serviceFeeDiv label,
+.deliveryFeeDiv label,
+.taxDiv label,
+.tipDiv label,
+.grandTotalDiv label {
+  width: 150px;
+  text-align: left;
+}
+
+.serviceFeeDiv input,
+.deliveryFeeDiv input,
+.taxDiv input,
+.tipDiv input,
+.grandTotalDiv input {
+  width: 200px;
+  background-color: var(--input-bg);
+}
+
+.calculateButton,
+.clearButton {
+  background-color: var(--green);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-family: "Poppins", sans-serif;
+  color: white;
+  transition: 0.3s background-color;
+  cursor: pointer;
+}
+.extraButtons {
+  display: flex;
+}
+.calculateButton:hover,
+.calculateButton:focus,
+.clearButton:hover,
+.clearButton:focus {
+  background-color: forestgreen;
+}
+
+.clearButton {
+  margin-left: 20px;
+}

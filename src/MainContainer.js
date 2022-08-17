@@ -59,8 +59,6 @@ const MainContainer = () => {
         setTaxRate={setTaxRate}
         setSplitTipAmount={setSplitTipAmount}
       />
-
-      {/* REACT ROUTES */}
     </main>
   );
 };

@@ -8,7 +8,6 @@ import { DarkModeContext } from "./DarkModeContext";
 
 const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
   const { darkMode } = useContext(DarkModeContext);
-
   const database = getDatabase(firebase);
 
   // useState itemName
@@ -17,10 +16,6 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
   const [itemPrice, setItemPrice] = useState(0);
   // useState item Key
   const [itemKey, setItemKey] = useState("");
-
-  // keep track of updates
-
-  // array to store ujser orders
 
   // use effect only on update
   useEffect(() => {
@@ -173,20 +168,19 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
               <span className="sr-only">Add Item</span>
             </button>
           </li>
-          {
-            userOrders.map((order) => {
-              const { parentKey, key, itemName, itemPrice } = order;
-
-              return (
-                <li
-                  className={
-                    darkMode ? "payeeBox darkDisplay" : "payeeBox lightDisplay"
-                  }
-                  key={key}
-                >
-                  <p>{itemName}</p>
-                  <p>${parseFloat(itemPrice).toFixed(2)}</p>
-                  <p className="payeeName">{order.name}</p>
+          {userOrders.map((order) => {
+            const { parentKey, key, itemName, itemPrice } = order;
+            return (
+              <li
+                className={
+                  darkMode ? "payeeBox darkDisplay" : "payeeBox lightDisplay"
+                }
+                key={key}
+              >
+                <p>{itemName}</p>
+                <p>${parseFloat(itemPrice).toFixed(2)}</p>
+                <p className="payeeName">{order.name}</p>
+                <div className="deleteButtonDiv">
                   <button
                     className={
                       darkMode ? "deleteButton darkDisplay" : "deleteButton"
@@ -198,42 +192,10 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
                       Delete {itemName} from Order List
                     </span>
                   </button>
-                </li>
-              );
-            })
-
-            /* {userInput.map((userOrder) => {
-            // ONLY runs these lines of code if there is a userOrder associated with the person
-            if (userOrder.userInfo.name.order) {
-              const parentNodeKey = userOrder.userInfo.key;
-
-              // create a new object based on orders
-              const newObj = userOrder.userInfo.name.order;
-
-              // loop through new object to get key
-              for (let key in newObj) {
-                // create new object with parentkey, key, itemName and itemPrice
-                const orderKey = {
-                  parentKey: parentNodeKey,
-                  key: key,
-                  itemName: newObj[key].itemName,
-                  itemPrice: newObj[key].itemPrice,
-                };
-                // push to newOrders array so we can .map through it
-                newOrders.push(orderKey);
-              }
-            }
-            return newOrders.map((orders) => {
-              return (
-                <li className="payeeBox" key={orders.key}>
-                  <p>{orders.itemName}</p>
-                  <p>{orders.itemPrice}</p>
-                  
-                </li>
-              );
-            });
-          })} */
-          }
+                </div>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </section>

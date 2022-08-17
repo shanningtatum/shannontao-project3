@@ -1,0 +1,73 @@
+/* DARK / LIGHT */
+
+/* TOGGLE FOR DARK/LGIHT MODE */
+.toggleButtonDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: lightgrey;
+}
+.toggleThemeButton {
+  position: relative;
+  border: none;
+  background-color: transparent;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.toggleButtonDiv:hover,
+.toggleButtonDiv:focus {
+  background-color: var(--green);
+}
+
+.toggleButtonDiv:hover .toolTipText,
+.toggleButtonDiv:focus .toolTipText {
+  visibility: visible;
+  opacity: 1;
+}
+
+.toolTipText {
+  opacity: 0;
+  transition: opacity 0.3s;
+  visibility: hidden;
+  width: max-content;
+  font-size: 0.8rem;
+  top: 40px;
+  left: -70px;
+  background-color: white;
+  position: absolute;
+  border-radius: 20px;
+  padding: 2px 5px;
+  z-index: 10;
+}
+.toolTipText::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: white;
+
+  left: 50%;
+  top: -5px;
+  transform: rotate(45deg);
+}
+
+.toolTipText.darkDisplay::before {
+  background-color: var(--dark-bg);
+}
+
+.darkDisplay {
+  background-color: var(--dark-bg);
+  color: white;
+}
+
+.wrapper.lightDisplay {
+  background-color: rgb(230, 230, 230);
+}
+
+.introSection .darkDisplay {
+  background-color: rgb(78, 78, 78);
+}

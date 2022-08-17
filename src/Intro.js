@@ -20,9 +20,10 @@ function Intro() {
         <p>A handy tool to split your bill between friends!</p>
         <p>How to use:</p>
         <ul>
-          <li>Enter the name of your friends who will be splitting the bill</li>
-          <li>Add the item and cost of their meal</li>
-          <li>Enter extra fee details</li>
+          <li>Enter names of people who are splitting the bill</li>
+          <li>Add the item name and cost of that item</li>
+          <li>Assign it to the person who ordered it</li>
+          <li>Enter extra fee details according to your bill details</li>
           <li>Calculate the split details</li>
           <li>Remind your friends to pay you back!</li>
         </ul>

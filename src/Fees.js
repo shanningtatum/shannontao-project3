@@ -49,16 +49,6 @@ const Fees = ({
       ).toFixed(2)
     );
 
-    // FORMULA:
-    // get total cost of the user's order
-    // get the service fee (split)
-    // get the delivery fee (split)
-    // ADD the split service fee and the split delivery fee to the user's order
-    // determine the tax rate
-    // multiply the tax rate to the order + service + delivery
-    // split the tip fee
-    // return the amount that person has to pay
-
     // calculate how much service fee is per person
     const splitService = serviceFee / userInput.length;
 
@@ -74,7 +64,6 @@ const Fees = ({
     setSplitFees(totalSplit);
 
     // TAX RATE CALCULATIONS:
-
     const taxPercentage =
       taxInput / (+orderSubtotal + +serviceFee + +deliveryFee);
 
@@ -84,7 +73,6 @@ const Fees = ({
   };
 
   const clearButton = () => {
-    // clears all the input fields
     setServiceFee(0);
     setDeliveryFee(0);
     setTax(0);
@@ -200,6 +188,3 @@ const Fees = ({
 };
 
 export default Fees;
-
-// divide the service and delivery fee by the length of the number of payees
-// add that amount to the total of the payee's orders x 1.13 (multiply the tax BEFORE adding the service and delivery fee)
