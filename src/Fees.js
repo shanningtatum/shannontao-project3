@@ -85,11 +85,11 @@ const Fees = ({
 
   const clearButton = () => {
     // clears all the input fields
-    setServiceFee("");
-    setDeliveryFee("");
-    setTax("");
-    setTip("");
-    setGrandTotal("");
+    setServiceFee(0);
+    setDeliveryFee(0);
+    setTax(0);
+    setTip(0);
+    setGrandTotal(0);
   };
 
   return (
