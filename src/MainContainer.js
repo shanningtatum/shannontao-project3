@@ -31,7 +31,7 @@ const MainContainer = () => {
       >
         <Link
           to={"/"}
-          class={darkMode ? "returnToLink darkDisplay" : "returnToLink"}
+          className={darkMode ? "returnToLink darkDisplay" : "returnToLink"}
         >
           <FontAwesomeIcon icon={faArrowLeft} />
           <p>Back to Instructions</p>

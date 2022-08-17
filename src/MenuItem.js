@@ -108,7 +108,7 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
   return (
     <section className="addItem">
       <div className="addItemPopup popup" tabIndex="0">
-        <form>
+        <form action="">
           <fieldset>
             <label htmlFor="itemName">Item Name</label>
             <input
@@ -182,7 +182,7 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
                   key={key}
                 >
                   <p>{itemName}</p>
-                  <p>${itemPrice}</p>
+                  <p>${parseFloat(itemPrice).toFixed(2)}</p>
                   <p className="payeeName">{order.name}</p>
                   <button
                     className={

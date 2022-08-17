@@ -8,11 +8,11 @@ const Fees = ({
   setSplitTipAmount,
 }) => {
   // set up states for the different inputs
-  const [serviceFeeInput, setServiceFee] = useState("");
-  const [deliveryFeeInput, setDeliveryFee] = useState("");
-  const [taxInput, setTax] = useState("");
-  const [tipInput, setTip] = useState("");
-  const [grandTotalInput, setGrandTotal] = useState("");
+  const [serviceFeeInput, setServiceFee] = useState(0);
+  const [deliveryFeeInput, setDeliveryFee] = useState(0);
+  const [taxInput, setTax] = useState(0);
+  const [tipInput, setTip] = useState(0);
+  const [grandTotalInput, setGrandTotal] = useState(0);
 
   // empty array to store order values
   const orderValues = [];
@@ -39,7 +39,6 @@ const Fees = ({
   // get the handle change for grand total
 
   const calculateBill = (serviceFee, deliveryFee, taxInput, tipInput) => {
-    console.log(serviceFee, deliveryFee, taxInput, tipInput);
     setGrandTotal(
       (
         +orderSubtotal +
@@ -115,7 +114,7 @@ const Fees = ({
               }
               return null;
             })}
-            <p>$ {orderSubtotal}</p>
+            <p>$ {orderSubtotal.toFixed(2)}</p>
           </div>
           <div className="serviceFeeDiv">
             <label htmlFor="serviceFeeInput">Service Fee</label>

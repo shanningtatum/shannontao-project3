@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <header className={darkMode ? "darkDisplay" : "lightDisplay"}>
       <div className="toggleButtonDiv">
-        <button class="toggleThemeButton" onClick={handleClick}>
+        <button className="toggleThemeButton" onClick={handleClick}>
           {!darkMode ? "🌚" : "🌝"}
           <span
             className={

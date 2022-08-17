@@ -33,7 +33,7 @@ const Payee = ({ userInput, setUserInput }) => {
 
       setUserInput(newState);
     });
-  });
+  }, [dbRef, setUserInput]);
 
   const updateUserInput = () => {
     onValue(dbRef, (response) => {
