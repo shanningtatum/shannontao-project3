@@ -108,7 +108,7 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
   return (
     <section className="addItem">
       <div className="addItemPopup popup" tabIndex="0">
-        <form action="">
+        <form>
           <fieldset>
             <label htmlFor="itemName">Item Name</label>
             <input
