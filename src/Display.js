@@ -17,7 +17,7 @@ function Display({
         <div>
           <ul className="renderPayees">
             {userInput.map((payee) => {
-              const orderArray = payee.userInfo.name.order;
+              const orderArray = payee.userInfo.order;
 
               const newArray = [];
               const priceArray = [];
@@ -25,7 +25,7 @@ function Display({
               // creates a new array to map over for the orders
               for (let key in orderArray) {
                 const userAndOrder = {
-                  name: payee.userInfo.name.name,
+                  name: payee.userInfo.name,
                   orderKey: key,
                 };
 

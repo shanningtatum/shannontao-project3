@@ -1,6 +1,13 @@
 import { useState, useEffect } from "react";
 import firebase from "./firebase";
-import { getDatabase, push, ref, onValue, remove } from "firebase/database";
+import {
+  getDatabase,
+  push,
+  ref,
+  onValue,
+  remove,
+  get,
+} from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
@@ -10,29 +17,36 @@ const Payee = ({ userInput, setUserInput }) => {
   const { darkMode } = useContext(DarkModeContext);
 
   // set state for inputs
-  const [payeeName, setPayeeName] = useState([]);
+  const [payeeName, setPayeeName] = useState("");
 
   const database = getDatabase(firebase);
   const dbRef = ref(database);
 
   useEffect(() => {
-    const database = getDatabase(firebase);
-    const dbRef = ref(database);
+    get(dbRef).then((response) => {
+      const data = response.val();
+      const newState = [];
 
+      for (let key in data) {
+        newState.push({ key: key, userInfo: data[key] });
+      }
+
+      setUserInput(newState);
+    });
+  });
+
+  const updateUserInput = () => {
     onValue(dbRef, (response) => {
       const data = response.val();
       const newState = [];
 
       for (let key in data) {
-        const userInfo = {
-          key: key,
-          name: data[key],
-        };
-        newState.push({ key: key, userInfo });
+        newState.push({ key: key, userInfo: data[key] });
       }
+
       setUserInput(newState);
     });
-  }, [payeeName, setUserInput]);
+  };
 
   // add popups
   const addPayeeHandle = () => {
@@ -50,7 +64,7 @@ const Payee = ({ userInput, setUserInput }) => {
 
   // handle input change
   const handlePayeeChange = (e) => {
-    setPayeeName({ name: e.target.value });
+    setPayeeName(e.target.value);
   };
 
   // submit button action
@@ -58,18 +72,21 @@ const Payee = ({ userInput, setUserInput }) => {
     e.preventDefault();
 
     if (payeeName) {
-      push(dbRef, payeeName);
+      push(dbRef, { name: payeeName });
       const addPayeePopup = document.querySelector(".addPayeePopup");
       addPayeePopup.classList.toggle("active");
       setPayeeName("");
     } else {
       alert("enter a value!");
     }
+
+    updateUserInput();
   };
 
   const deletePayee = (payeeId) => {
     const deleteRef = ref(database, `/${payeeId}`);
     remove(deleteRef);
+    updateUserInput();
   };
 
   return (
@@ -84,6 +101,7 @@ const Payee = ({ userInput, setUserInput }) => {
             maxLength="20"
             placeholder="ex: Shannon"
             onChange={handlePayeeChange}
+            value={payeeName}
           />
           <div className="actionButton">
             <button onClick={storePayeeName}>Submit</button>
@@ -112,12 +130,12 @@ const Payee = ({ userInput, setUserInput }) => {
                   }
                   key={index}
                 >
-                  <p>{userObj.userInfo.name.name}</p>
+                  <p>{userObj.userInfo.name}</p>
                   <button
                     className={
                       darkMode ? "deleteButton darkDisplay" : "deleteButton"
                     }
-                    onClick={() => deletePayee(userObj.userInfo.key)}
+                    onClick={() => deletePayee(userObj.key)}
                   >
                     <FontAwesomeIcon icon={faXmark} />
                   </button>

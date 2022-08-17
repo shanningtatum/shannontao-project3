@@ -163,16 +163,23 @@ input::-webkit-inner-spin-button {
 
 }
 
+.returnToButton{
+  width:200px;
+  margin:0 40px;  
+}
+
 .returnToLink{
   color:black;
   display:flex;
   align-items: center;
   text-decoration:none;
   transition:color 0.3s;
+  background-color:white;
 }
 
 .returnToLink.darkDisplay{
   color:white;
+  background-color:var(--dark-bg);
 }
 
 .returnToLink:hover{

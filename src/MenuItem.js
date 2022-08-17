@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import firebase from "./firebase";
-import { getDatabase, ref, push, remove, onValue } from "firebase/database";
+import { getDatabase, ref, push, remove } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
@@ -12,11 +12,11 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
   const database = getDatabase(firebase);
 
   // useState itemName
-  const [itemName, setItemName] = useState([]);
+  const [itemName, setItemName] = useState("");
   // useState itemPrice
-  const [itemPrice, setItemPrice] = useState([]);
+  const [itemPrice, setItemPrice] = useState(0);
   // useState item Key
-  const [itemKey, setItemKey] = useState([]);
+  const [itemKey, setItemKey] = useState("");
 
   // keep track of updates
 
@@ -24,31 +24,24 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
 
   // use effect only on update
   useEffect(() => {
-    const orderRef = ref(database, `/${itemKey}/order`);
+    const newOrders = [];
 
-    onValue(orderRef, () => {
-      const newOrders = [];
+    userInput.forEach((people) => {
+      const orderArray = people.userInfo.order;
 
-      userInput.map((people) => {
-        const orderArray = people.userInfo.name.order;
-
-        for (let key in orderArray) {
-          const newOrder = {
-            parentKey: people.userInfo.key,
-            key: key,
-            name: people.userInfo.name,
-            itemName: orderArray[key].itemName,
-            itemPrice: orderArray[key].itemPrice,
-          };
-
-          newOrders.push(newOrder);
-        }
-
-        setUserOrders(newOrders);
-
-        return null;
-      });
+      for (let key in orderArray) {
+        const newOrder = {
+          parentKey: people.key,
+          key: key,
+          name: people.userInfo.name,
+          itemName: orderArray[key].itemName,
+          itemPrice: orderArray[key].itemPrice,
+        };
+        newOrders.push(newOrder);
+      }
     });
+
+    setUserOrders(newOrders);
   }, [itemName, setUserOrders, userInput, itemKey, database]);
 
   // triggers add item popup
@@ -131,8 +124,6 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
             <input
               type="number"
               name="itemPrice"
-              min="0"
-              max="999"
               onChange={handlePriceChange}
               value={itemPrice}
               placeholder="Ex: 12.99"
@@ -143,28 +134,30 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
             <label htmlFor="selectPayee">Payee Name</label>
             <select
               name="selectPayee"
-              defaultValue="Select Payee"
               id="selectPayee"
+              defaultValue="placeholder"
               className="selectPayee"
               onChange={(e) => readOptions(e)}
             >
-              <option value="placeholder" disabled selected>
+              <option value="placeholder" disabled>
                 Select Payee
               </option>
               {userInput.map((username) => {
                 return (
-                  <option
-                    value={username.userInfo.key}
-                    key={username.userInfo.key}
-                  >
-                    {username.userInfo.name.name}
+                  <option value={username.key} key={username.key}>
+                    {username.userInfo.name}
                   </option>
                 );
               })}
             </select>
           </fieldset>
           <div className="actionButton">
-            <button onClick={storeItemName}>Submit</button>
+            <button
+              onClick={storeItemName}
+              disabled={!itemKey || !itemName || !itemPrice}
+            >
+              Submit
+            </button>
             <button onClick={closeItemButton}>Cancel</button>
           </div>
         </form>
@@ -190,7 +183,7 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
                 >
                   <p>{itemName}</p>
                   <p>${itemPrice}</p>
-                  <p className="payeeName">{order.name.name}</p>
+                  <p className="payeeName">{order.name}</p>
                   <button
                     className={
                       darkMode ? "deleteButton darkDisplay" : "deleteButton"
