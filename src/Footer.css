@@ -1,0 +1,18 @@
+/* footer */
+
+footer {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  width: 100%;
+  color: black;
+  border-top: var(--dark-bg) 1.5px solid;
+  height: 8vh;
+  text-align: center;
+}
+
+footer.darkDisplay {
+  border-top: white 1.5px solid;
+  background-color: var(--dark-bg);
+  color: white;
+}

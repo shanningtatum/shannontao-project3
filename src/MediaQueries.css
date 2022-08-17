@@ -1,0 +1,63 @@
+/* MEDIA QUERY */
+
+/* max 500 */
+@media (max-width: 500px) {
+  .toolTipText {
+    left: -10px;
+  }
+  .toolTipText::before {
+    left: 20px;
+  }
+}
+
+/* max 400 */
+@media (max-width: 400px) {
+  header {
+    flex-direction: column-reverse;
+  }
+
+  .toolTipText {
+    left: -65px;
+  }
+  .toolTipText::before {
+    left: 45%;
+  }
+  .introSection ul {
+    padding: 0;
+  }
+
+  .extraFees h2 {
+    text-align: left;
+  }
+  .extraFees {
+    text-align: center;
+  }
+  .serviceFeeDiv,
+  .deliveryFeeDiv,
+  .taxDiv,
+  .tipDiv,
+  .grandTotalDiv {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: center;
+  }
+  .subtotalDiv p,
+  .serviceFeeDiv label,
+  .deliveryFeeDiv label,
+  .taxDiv label,
+  .tipDiv label {
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .extraButtons {
+    flex-direction: column;
+  }
+  .clearButton,
+  .calculateButton {
+    padding: 15px 20px;
+  }
+  .clearButton {
+    margin: 20px 0 0;
+  }
+}
