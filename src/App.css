@@ -286,7 +286,18 @@ fieldset{
   padding:10px;
 }
 
+/* MAIN */
 
+main{
+  background-image:url(./assets/lightmode.png);
+  background-position:center;
+  background-size:contain;
+  background-repeat:no-repeat;
+}
+main.darkDisplay{
+  background-image:url(./assets/darkmode.png);
+
+}
 
 /* ADD ITEM POP UP */
 .addItemPopup fieldset{
@@ -431,7 +442,7 @@ fieldset{
   background-color:var(--input-bg);
 }
 
-.calculateButton{
+.calculateButton, .clearButton{
   background-color:var(--green);
   border:none;
   padding:5px 10px;
@@ -440,9 +451,16 @@ fieldset{
   color:white;
   transition:0.3s background-color;
 }
+.extraButtons{
+  display:flex;
 
-.calculateButton:hover, .calculateButton:focus{
+}
+.calculateButton:hover, .calculateButton:focus, .clearButton:hover, .clearButton:focus{
   background-color:forestgreen;
+}
+
+.clearButton{
+  margin-left:20px;
 }
 
 /* footer */
@@ -488,5 +506,12 @@ footer.darkDisplay{
   .subtotalDiv p, .serviceFeeDiv label, .deliveryFeeDiv label, .taxDiv label, .tipDiv label{
     margin-bottom:10px;
     text-align: center;
+  }
+  .extraButtons{
+    flex-direction:column;
+  }
+
+  .clearButton{
+    margin:10px 0 0;
   }
 }

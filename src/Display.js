@@ -13,7 +13,7 @@ function Display({
   return (
     <section className="displaySection">
       <div className="wrapper">
-        {userOrders === "" ? null : <h2>Split Details</h2>}
+        <h2>Split Details</h2>
         <div>
           <ul className="renderPayees">
             {userInput.map((payee) => {

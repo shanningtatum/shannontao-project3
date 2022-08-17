@@ -173,14 +173,24 @@ const Fees = ({
             <p>Grand Total: ${grandTotalInput}</p>
           </div>
         </form>
-        <button
-          className="calculateButton"
-          onClick={() =>
-            calculateBill(serviceFeeInput, deliveryFeeInput, taxInput, tipInput)
-          }
-        >
-          Calculate
-        </button>
+        <div className="extraButtons">
+          <button
+            className="calculateButton"
+            onClick={() =>
+              calculateBill(
+                serviceFeeInput,
+                deliveryFeeInput,
+                taxInput,
+                tipInput
+              )
+            }
+          >
+            Calculate
+          </button>
+          <button className="clearButton" onClick={clearButton}>
+            Clear
+          </button>
+        </div>
       </div>
     </section>
   );
