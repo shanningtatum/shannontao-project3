@@ -20,7 +20,7 @@ const Header = () => {
         </span>
       </button>
       <h1>
-        Duber<span className="strongFont">Eats</span> Bill Splitter
+        Guber<span className="strongFont">Eats</span> Bill Splitter
       </h1>
     </header>
   );

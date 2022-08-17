@@ -14,7 +14,7 @@ function Intro() {
         className={darkMode ? "wrapper darkDisplay" : "wrapper lightDisplay"}
       >
         <h2>
-          Welcome to Duber<span className="strongFont">Eats</span> Bill
+          Welcome to Guber<span className="strongFont">Eats</span> Bill
           Splitter!
         </h2>
         <p>A handy tool to split your bill between friends!</p>

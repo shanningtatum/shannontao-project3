@@ -3,10 +3,13 @@ import firebase from "./firebase";
 import { getDatabase, ref, push, remove, onValue } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { DarkModeContext } from "./DarkModeContext";
 
 const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
+  const { darkMode } = useContext(DarkModeContext);
+
   const database = getDatabase(firebase);
-  // const dbRef = ref(database);
 
   // useState itemName
   const [itemName, setItemName] = useState([]);
@@ -175,15 +178,25 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
             </button>
           </li>
           {
-            userOrders.map((order, index) => {
+            userOrders.map((order) => {
               const { parentKey, key, itemName, itemPrice } = order;
 
               return (
-                <li className={`payeeBox ${order.name.name}`} key={key}>
+                <li
+                  className={
+                    darkMode ? "payeeBox darkDisplay" : "payeeBox lightDisplay"
+                  }
+                  key={key}
+                >
                   <p>{itemName}</p>
                   <p>${itemPrice}</p>
                   <p className="payeeName">{order.name.name}</p>
-                  <button onClick={() => removeItem(parentKey, key)}>
+                  <button
+                    className={
+                      darkMode ? "deleteButton darkDisplay" : "deleteButton"
+                    }
+                    onClick={() => removeItem(parentKey, key)}
+                  >
                     <FontAwesomeIcon icon={faXmark} />
                   </button>
                 </li>

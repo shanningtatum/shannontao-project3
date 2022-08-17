@@ -170,7 +170,7 @@ const Fees = ({
             </div>
           </div>
           <div className="grandTotalDiv">
-            <p>Grand Total: {grandTotalInput}</p>
+            <p>Grand Total: ${grandTotalInput}</p>
           </div>
         </form>
         <button

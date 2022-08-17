@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { DarkModeContext } from "./DarkModeContext";
+
 function Display({
   userInput,
   splitFees,
@@ -5,10 +8,12 @@ function Display({
   splitTipAmount,
   userOrders,
 }) {
+  const { darkMode } = useContext(DarkModeContext);
+
   return (
     <section className="displaySection">
       <div className="wrapper">
-        {userOrders === "" ? <h2>Split Details</h2> : null}
+        {userOrders === "" ? null : <h2>Split Details</h2>}
         <div>
           <ul className="renderPayees">
             {userInput.map((payee) => {
@@ -37,7 +42,14 @@ function Display({
               return newArray.map((item) => {
                 const { name, orderKey } = item;
                 return (
-                  <li key={orderKey} className="payeeBox">
+                  <li
+                    key={orderKey}
+                    className={
+                      darkMode
+                        ? "payeeBox darkDisplay"
+                        : "payeeBox lightDisplay"
+                    }
+                  >
                     <p>{name}</p>
                     <p>
                       $

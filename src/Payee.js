@@ -3,8 +3,12 @@ import firebase from "./firebase";
 import { getDatabase, push, ref, onValue, remove } from "firebase/database";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
+import { DarkModeContext } from "./DarkModeContext";
 
 const Payee = ({ userInput, setUserInput }) => {
+  const { darkMode } = useContext(DarkModeContext);
+
   // set state for inputs
   const [payeeName, setPayeeName] = useState([]);
 
@@ -95,16 +99,26 @@ const Payee = ({ userInput, setUserInput }) => {
               className="addPayeeButton addButton"
               onClick={addPayeeHandle}
             >
-              <FontAwesomeIcon icon={faPlus} className="addIcon" />
+              <FontAwesomeIcon icon={faPlus} className="addIcon " />
             </button>
           </li>
           {
             // RENDER PAYEE LIST
             userInput.map((userObj, index) => {
               return (
-                <li className={`payeeBox ${index}`} key={index}>
+                <li
+                  className={
+                    darkMode ? "payeeBox darkDisplay" : "payeeBox lightDisplay"
+                  }
+                  key={index}
+                >
                   <p>{userObj.userInfo.name.name}</p>
-                  <button onClick={() => deletePayee(userObj.userInfo.key)}>
+                  <button
+                    className={
+                      darkMode ? "deleteButton darkDisplay" : "deleteButton"
+                    }
+                    onClick={() => deletePayee(userObj.userInfo.key)}
+                  >
                     <FontAwesomeIcon icon={faXmark} />
                   </button>
                 </li>
