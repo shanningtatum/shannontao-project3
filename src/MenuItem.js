@@ -114,6 +114,7 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
             <input
               type="text"
               name="itemName"
+              id="itemName"
               maxLength="20"
               onChange={handleItemChange}
               value={itemName}
@@ -124,6 +125,7 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
             <input
               type="number"
               name="itemPrice"
+              id="itemPrice"
               onChange={handlePriceChange}
               value={itemPrice}
               placeholder="Ex: 12.99"
@@ -168,6 +170,7 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
           <li>
             <button className="addItemButton addButton" onClick={addItemHandle}>
               <FontAwesomeIcon icon={faPlus} className="addIcon" />
+              <span className="sr-only">Add Item</span>
             </button>
           </li>
           {
@@ -191,6 +194,9 @@ const MenuItem = ({ userInput, userOrders, setUserOrders }) => {
                     onClick={() => removeItem(parentKey, key)}
                   >
                     <FontAwesomeIcon icon={faXmark} />
+                    <span className="sr-only">
+                      Delete {itemName} from Order List
+                    </span>
                   </button>
                 </li>
               );

@@ -97,6 +97,7 @@ const Payee = ({ userInput, setUserInput }) => {
           <input
             type="text"
             name="payeeName"
+            id="payeeName"
             minLength="1"
             maxLength="20"
             placeholder="ex: Shannon"
@@ -118,6 +119,7 @@ const Payee = ({ userInput, setUserInput }) => {
               onClick={addPayeeHandle}
             >
               <FontAwesomeIcon icon={faPlus} className="addIcon " />
+              <span className="sr-only">Add Payee</span>
             </button>
           </li>
           {
@@ -138,6 +140,9 @@ const Payee = ({ userInput, setUserInput }) => {
                     onClick={() => deletePayee(userObj.key)}
                   >
                     <FontAwesomeIcon icon={faXmark} />
+                    <span className="sr-only">
+                      Delete {userObj.userInfo.name} from Payee List
+                    </span>
                   </button>
                 </li>
               );

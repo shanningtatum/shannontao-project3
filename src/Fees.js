@@ -122,6 +122,7 @@ const Fees = ({
               <span>$</span>
               <input
                 type="number"
+                id="serviceFeeInput"
                 inputMode="numeric"
                 name="serviceFeeInput"
                 onChange={handleServiceFee}
@@ -135,6 +136,7 @@ const Fees = ({
               <span>$</span>
               <input
                 type="number"
+                id="deliveryFeeInput"
                 inputMode="numeric"
                 name="deliveryFeeInput"
                 onChange={handleDeliveryFee}
@@ -148,6 +150,7 @@ const Fees = ({
               <span>$</span>
               <input
                 type="number"
+                id="taxInput"
                 inputMode="numeric"
                 name="taxInput"
                 onChange={handleTax}
@@ -161,6 +164,7 @@ const Fees = ({
               <span>$</span>
               <input
                 type="number"
+                id="tipInput"
                 inputMode="numeric"
                 name="tipInput"
                 onChange={handleTip}
