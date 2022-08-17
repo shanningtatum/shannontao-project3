@@ -9,16 +9,19 @@ const Header = () => {
   };
   return (
     <header className={darkMode ? "darkDisplay" : "lightDisplay"}>
-      <button class="toggleThemeButton" onClick={handleClick}>
-        {!darkMode ? "🌚" : "🌝"}
-        <span
-          className={
-            darkMode ? "toolTipText lightDisplay" : "toolTipText darkDisplay"
-          }
-        >
-          {!darkMode ? "Click for dark mode" : "Click for light mode"}
-        </span>
-      </button>
+      <div className="toggleButtonDiv">
+        <button class="toggleThemeButton" onClick={handleClick}>
+          {!darkMode ? "🌚" : "🌝"}
+          <span
+            className={
+              darkMode ? "toolTipText lightDisplay" : "toolTipText darkDisplay"
+            }
+          >
+            {!darkMode ? "Click for dark mode" : "Click for light mode"}
+          </span>
+        </button>
+      </div>
+
       <h1>
         Guber<span className="strongFont">Eats</span> Bill Splitter
       </h1>

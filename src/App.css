@@ -106,21 +106,27 @@ input::-webkit-inner-spin-button {
 /* DARK / LIGHT */
 
 /* TOGGLE FOR DARK/LGIHT MODE */
-.toggleThemeButton{
-  position: relative;
-  align-self: center;
-  border:none;
+.toggleButtonDiv{
+  display:flex;
+  justify-content: center;
+  align-items: center;
   width:40px;
   height:40px;
   border-radius:50%;
+  background-color:lightgrey;
+}
+.toggleThemeButton{
+  position: relative;
+  border:none;
+  background-color:transparent;
   transition:background-color 0.3s;
 }
 
-.toggleThemeButton:hover, .toggleThemeButton:focus{
+.toggleButtonDiv:hover, .toggleButtonDiv:focus{
   background-color:var(--green);
 }
 
-.toggleThemeButton:hover .toolTipText, .toggleThemeButton:focus .toolTipText{
+.toggleButtonDiv:hover .toolTipText, .toggleButtonDiv:focus .toolTipText{
   visibility:visible;
   opacity:1;
 }
