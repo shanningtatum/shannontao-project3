@@ -212,6 +212,9 @@ main.darkDisplay {
 
 /* DELETE ICON */
 .deleteButtonDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 50%;
   width: 25px;
   height: 25px;
@@ -219,7 +222,6 @@ main.darkDisplay {
   position: absolute;
   top: -5px;
   right: -5px;
-
   transition: 0.3s;
 }
 .deleteButton {
