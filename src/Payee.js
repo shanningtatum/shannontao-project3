@@ -111,7 +111,7 @@ const Payee = ({ userInput, setUserInput }) => {
         </form>
       </div>
       <div className="wrapper">
-        <h2>Add Payee</h2>
+        <h2>Add Payer</h2>
         <ul className="payeeList">
           <li>
             <button
