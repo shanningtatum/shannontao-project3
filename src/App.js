@@ -2,6 +2,7 @@ import Header from "./Header";
 import Intro from "./Intro";
 import MainContainer from "./MainContainer";
 import Footer from "./Footer";
+import ErrorPage from "./ErrorPage";
 import { DarkModeProvider } from "./DarkModeContext";
 import { Routes, Route } from "react-router-dom";
 
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Intro />} />
           <Route path="/calculator" element={<MainContainer />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
 
         <Footer />
